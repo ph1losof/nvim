@@ -2,8 +2,8 @@ return {
   {
     't3ntxcl3s/ecolog.nvim',
     keys = {
-      { '<leader>el', '<Cmd>EcologShelterLinePeek<cr>', desc = 'Ecolog peek line' },
       { '<leader>e', '', desc = '+ecolog', mode = { 'n', 'v' } },
+      { '<leader>el', '<Cmd>EcologShelterLinePeek<cr>', desc = 'Ecolog peek line' },
       { '<leader>eh', '<Cmd>EcologShellToggle<cr>', desc = 'Toggle shell variables' },
       { '<leader>ge', '<cmd>EcologGoto<cr>', desc = 'Go to env file' },
       { '<leader>ec', '<cmd>EcologSnacks<cr>', desc = 'Open a picker' },

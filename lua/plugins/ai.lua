@@ -335,28 +335,12 @@ return {
   {
     'olimorris/codecompanion.nvim',
     keys = {
-      {
-        '<Leader>aa',
-        '<cmd>CodeCompanionActions<CR>',
-        {
-          description = 'toggle a chat buffer',
-        },
-        mode = { 'n', 'v' },
-      },
-      {
-        '<Leader>ac',
-        '<cmd>CodeCompanionChat Toggle<CR>',
-        {
-          description = 'toggle a chat buffer',
-        },
-        mode = { 'n', 'v' },
-      },
-      {
-        '<LocalLeader>ac',
-        '<cmd>CodeCompanionChat Add<CR>',
-        { description = 'Add code to a chat buffer' },
-        mode = { 'v' },
-      },
+      { '<leader>a', '', desc = '+ai', mode = { 'n', 'v' } },
+      { '<Leader>aa', '<cmd>CodeCompanionActions<CR>', desc = 'toggle a chat buffer', mode = { 'n', 'v' } },
+      { '<leader>ae', ":<C-u>'<,'>CodeCompanion ", mode = 'v', desc = 'Inline prompt (CodeCompanion)', silent = false, noremap = true },
+      { '<leader>ae', '<cmd>CodeCompanion<cr>', mode = 'n', desc = 'Inline prompt (CodeCompanion)' },
+      { '<Leader>ac', '<cmd>CodeCompanionChat Toggle<CR>', desc = 'toggle a chat buffer', mode = { 'n', 'v' } },
+      { '<LocalLeader>ac', '<cmd>CodeCompanionChat Add<CR>', desc = 'Add code to a chat buffer', mode = { 'v' } },
     },
     cmd = { 'CodeCompanion', 'CodeCompanionActions', 'CodeCompanionChat' },
     init = function()

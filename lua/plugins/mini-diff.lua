@@ -3,7 +3,7 @@ return {
   config = function()
     local diff = require 'mini.diff'
     diff.setup {
-      -- Disabled by default
+      -- NOTE: Disabled by default currently used only for codecompanion.nvim
       source = diff.gen_source.none(),
     }
   end,

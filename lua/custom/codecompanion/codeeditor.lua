@@ -1,5 +1,3 @@
-local last_operation = ''
-
 -- Code Editor helper
 local CodeEditor = {}
 CodeEditor.__index = CodeEditor

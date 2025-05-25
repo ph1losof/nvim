@@ -1,4 +1,3 @@
-local last_operation = ''
 local code_module = require 'custom.codecompanion.codeeditor'
 
 return {

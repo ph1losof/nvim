@@ -1,4 +1,7 @@
+-- NOTE: currently oil.nvim is being loaded on startup to immdiately open the parent directory,
+-- this checks for specific conditions whether to load it or not. The following piece of code is taken from dashboard plugin - alpha.nvim
 -- taken from https://github.com/goolord/alpha-nvim/blob/b6f4129302db197a7249e67a90de3f2b676de13e/lua/alpha.lua#L570
+
 -- stylua: ignore start
 local function should_skip_oil()
     -- don't start when opening a file
@@ -40,9 +43,9 @@ local function should_skip_oil()
     -- base case: don't skip
     return false
 end
-
 -- stylua: ignore end
 
+-- NOTE: adds support for snacks rename feature in oil.nvim
 vim.api.nvim_create_autocmd('User', {
   pattern = 'OilActionsPost',
   callback = function(event)
@@ -73,7 +76,6 @@ return {
         view_options = {
           show_hidden = true,
           natural_order = true,
-
           is_always_hidden = function(name, _)
             return name == '..' or name == '.git'
           end,

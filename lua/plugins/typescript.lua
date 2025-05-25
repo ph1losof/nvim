@@ -20,7 +20,7 @@ return {
       require('typescript-tools').setup {
         capabilities = capabilities,
         handlers = {
-          -- eslint handles 6133, 1109, 6192, 6196 (unused vars, imports, declarations)
+          -- NOTE: eslint handles 6133, 1109, 6192, 6196 (unused vars, imports, declarations)
           ['textDocument/publishDiagnostics'] = api.filter_diagnostics { 80006, 6133, 1109, 6192, 6196 },
         },
         settings = {

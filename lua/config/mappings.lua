@@ -40,7 +40,8 @@ vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
 vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'General Clear highlights' })
 
 -- comments
-vim.keymap.set({ 'n', 'v' }, '<leader>/', 'gcc', { desc = 'Toggle Comment', remap = true })
+vim.keymap.set({ 'n' }, '<leader>/', 'gcc', { desc = 'Toggle Comment', remap = true })
+vim.keymap.set({ 'v' }, '<leader>/', 'gb', { desc = 'Toggle Comment', remap = true })
 
 -- Primeagen's greatest remap ever
 vim.keymap.set('x', '<leader>p', [["_dP]])

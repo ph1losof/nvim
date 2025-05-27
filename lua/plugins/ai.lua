@@ -307,7 +307,7 @@ Content:
       },
       {
         'HakonHarnes/img-clip.nvim',
-        event = 'VeryLazy',
+        ft = { 'codecompanion' },
         opts = {
           filetypes = {
             codecompanion = {

@@ -214,6 +214,7 @@ return {
         'tailwindcss-language-server',
         'css-lsp',
         'prettierd',
+        'vue-language-server',
         'eslint_d',
         'codespell',
         'dockerfile-language-server',

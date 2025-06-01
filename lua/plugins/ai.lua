@@ -271,12 +271,11 @@ Content:
             dir_to_save = vim.fn.stdpath 'data' .. '/codecompanion-history',
           },
         },
-        -- WARN: after migration to fish doesn't work
-        --[[ vectorcode = {
+        vectorcode = {
           opts = {
             add_tool = true,
           },
-        }, ]]
+        },
         mcphub = {
           callback = 'mcphub.extensions.codecompanion',
           opts = {
@@ -300,13 +299,12 @@ Content:
         build = 'npm install -g mcp-hub@latest',
         config = true,
       },
-      -- WARN: after migration to fish doesn't work
-      --[[ {
+      {
         'Davidyz/VectorCode',
         version = '*',
         build = 'pipx upgrade vectorcode',
         dependencies = { 'nvim-lua/plenary.nvim' },
-      }, ]]
+      },
       {
         'HakonHarnes/img-clip.nvim',
         ft = { 'codecompanion' },

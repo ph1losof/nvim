@@ -4,6 +4,8 @@ return {
     dependencies = {
       { 'mason-org/mason.nvim', tag = 'v1.11.0', config = true }, -- NOTE: Must be loaded before dependants
       { 'mason-org/mason-lspconfig.nvim', tag = 'v1.32.0' },
+      -- NOTE: installing not using mason solves https://github.com/nanotee/sqls.nvim/issues/23
+      { 'nanotee/sqls.nvim' },
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {
         notification = {
@@ -148,6 +150,7 @@ return {
             },
           },
         },
+        sqls = {},
         rust_analyzer = {
           file_types = { 'rust' },
           root_dir = util.root_pattern 'Config.toml',
@@ -174,7 +177,6 @@ return {
         'stylua',
 
         -- SQL
-        'sqls',
         'sqlfluff',
         'sql-formatter',
 

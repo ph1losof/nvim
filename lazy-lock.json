@@ -51,6 +51,7 @@
   "render-markdown.nvim": { "branch": "main", "commit": "8debb17aab2fbbf3b341e46ac032d0a6f937d8c3" },
   "scratch-runner.nvim": { "branch": "master", "commit": "9398df3683bd7eb4fa22928c95469c9ea72be308" },
   "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" },
+  "sqls.nvim": { "branch": "main", "commit": "d1bc5421ef3e8edc5101e37edbb7de6639207a09" },
   "tailwind-tools": { "branch": "master", "commit": "fbe982901d4508b0dcd80e07addf0fcb6dab6c49" },
   "timber.nvim": { "branch": "main", "commit": "aac3a12753652a60955d3178b75fdb6c247b9f7d" },
   "todo-comments.nvim": { "branch": "main", "commit": "304a8d204ee787d2544d8bc23cd38d2f929e7cc5" },

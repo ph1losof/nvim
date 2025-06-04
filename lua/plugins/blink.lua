@@ -77,11 +77,7 @@ return {
         providers = {
           ecolog = { score_offset = 102, name = 'ecolog', module = 'ecolog.integrations.cmp.blink_cmp' },
           snippets = { score_offset = 101, name = 'snippets', module = 'blink.cmp.sources.snippets' },
-          lazydev = {
-            name = 'LazyDev',
-            module = 'lazydev.integrations.blink',
-            score_offset = 100,
-          },
+          lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
           lsp = { score_offset = 99, name = 'lsp', module = 'blink.cmp.sources.lsp' },
           copilot = {
             name = 'copilot',

@@ -1,3 +1,5 @@
+-- credits to https://github.com/k0ch4nx for the solution
+
 ---@module "lazy"
 ---@type LazySpec
 return {

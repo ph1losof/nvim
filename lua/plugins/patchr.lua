@@ -1,4 +1,5 @@
 -- credits to https://github.com/k0ch4nx for the solution
+-- for handling LazySync and LazyCheck events
 
 ---@module "lazy"
 ---@type LazySpec
@@ -64,6 +65,7 @@ return {
 
     ---@type patchr.config
     return {
+      -- NOTE: We disable patchr's internal autocmds, as this config handles them manually
       autocmds = false,
       plugins = {
         ['typescript-tools.nvim'] = {

@@ -51,7 +51,7 @@ return {
       },
       strategies = {
         chat = {
-          adapter = 'gemini',
+          adapter = 'copilot',
           start_in_insert_mode = false,
           tools = {
             opts = {
@@ -245,7 +245,7 @@ Content:
           },
         },
         inline = {
-          adapter = 'gemini',
+          adapter = 'copilot',
           keymaps = {
             accept_change = {
               modes = { n = 'ga' },

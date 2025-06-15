@@ -65,4 +65,8 @@ vim.keymap.set('n', '/', [[/\v]])
 -- prevent x delete from registering when next paste
 vim.keymap.set('n', 'x', '"_x')
 
+-- better increment/decrement numbers
+vim.keymap.set('n', '+', '<C-a>', { desc = 'Increment numbers', noremap = true })
+vim.keymap.set('n', '-', '<C-x>', { desc = 'Decrement numbers', noremap = true })
+
 -- vim: ts=2 sts=2 sw=2 et

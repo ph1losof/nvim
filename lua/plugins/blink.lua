@@ -25,6 +25,8 @@ return {
       },
     },
     version = '1.*', -- use a release tag to download pre-built binaries
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = {
       keymap = {
         preset = 'default',
@@ -76,7 +78,7 @@ return {
       sources = {
         providers = {
           ecolog = { score_offset = 102, name = 'ecolog', module = 'ecolog.integrations.cmp.blink_cmp' },
-          snippets = { score_offset = 101, name = 'snippets', module = 'blink.cmp.sources.snippets' },
+          snippets = { score_offset = 101, max_items = 3, name = 'snippets', module = 'blink.cmp.sources.snippets' },
           lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
           lsp = { score_offset = 99, name = 'lsp', module = 'blink.cmp.sources.lsp' },
           copilot = {
@@ -103,9 +105,6 @@ return {
         },
       },
       completion = {
-        trigger = {
-          show_on_blocked_trigger_characters = {},
-        },
         menu = {
           draw = {
             treesitter = { 'lsp' },

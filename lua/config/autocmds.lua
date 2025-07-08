@@ -109,3 +109,10 @@ vim.api.nvim_create_autocmd('VimResized', {
   desc = 'autoresize windows on resizing operation',
   command = 'wincmd =',
 })
+
+-- Command helps to copy current path
+vim.api.nvim_create_user_command('CpPath', function()
+  local path = vim.fn.expand '%:p'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, {})

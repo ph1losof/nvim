@@ -89,7 +89,7 @@ vim.keymap.set('n', '<leader>yfr', function()
 end, { desc = 'Copy relative file path to the clipboard' })
 
 vim.keymap.set('n', '<leader>yfa', function()
-  copy_to_clipboard(format_path ':.')
+  copy_to_clipboard(format_path ':p')
 end, { desc = 'Copy absolute file path to the clipboard' })
 
 vim.keymap.set('n', '<leader>yfn', function()

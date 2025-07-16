@@ -69,4 +69,31 @@ vim.keymap.set('n', 'x', '"_x')
 vim.keymap.set('n', '+', '<C-a>', { desc = 'Increment numbers', noremap = true })
 vim.keymap.set('n', '-', '<C-x>', { desc = 'Decrement numbers', noremap = true })
 
+---@param mods string filename-modifiers
+---@param buf_path string|nil file path (defaults to current buffer)
+---@return string
+---see: https://vim-jp.org/vimdoc-ja/cmdline.html#filename-modifiers
+local function format_path(mods, buf_path)
+  local path = buf_path or vim.fn.expand '%'
+  return vim.fn.fnamemodify(path, mods)
+end
+
+---@param path string
+local function copy_to_clipboard(path)
+  vim.fn.setreg('+', path)
+  vim.api.nvim_echo({ { 'Copied: ' .. path } }, false, {})
+end
+
+vim.keymap.set('n', '<leader>yfr', function()
+  copy_to_clipboard(format_path ':.')
+end, { desc = 'Copy relative file path to the clipboard' })
+
+vim.keymap.set('n', '<leader>yfa', function()
+  copy_to_clipboard(format_path ':.')
+end, { desc = 'Copy absolute file path to the clipboard' })
+
+vim.keymap.set('n', '<leader>yfn', function()
+  copy_to_clipboard(format_path ':t')
+end, { desc = 'Copy just the file name to the clipboard' })
+
 -- vim: ts=2 sts=2 sw=2 et

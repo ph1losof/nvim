@@ -49,7 +49,7 @@ return {
             harpoon_section,
           },
           lualine_x = {
-            require('ecolog').get_lualine(),
+            require('ecolog.integrations.statusline').lualine(),
           },
           lualine_y = {
             'encoding',

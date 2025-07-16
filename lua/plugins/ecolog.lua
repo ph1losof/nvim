@@ -1,6 +1,6 @@
 return {
   {
-    't3ntxcl3s/ecolog.nvim',
+    dir = '~/Projects/ecolog.nvim',
     keys = {
       { '<leader>e', '', desc = '+ecolog', mode = { 'n', 'v' } },
       { '<leader>el', '<Cmd>EcologShelterLinePeek<cr>', desc = 'Ecolog peek line' },
@@ -14,6 +14,11 @@ return {
     opts = {
       preferred_environment = 'local',
       types = true,
+      monorepo = {
+        enabled = true,
+        auto_switch = true,
+        notify_on_switch = true,
+      },
       providers = {
         {
           pattern = '{{[%w_]+}}?$',
@@ -48,6 +53,7 @@ return {
         blink_cmp = true,
         statusline = {
           hidden_mode = true,
+          icons = { enabled = true, env = 'E', shelter = 'S' },
           highlights = {
             env_file = 'Directory',
             vars_count = 'Number',

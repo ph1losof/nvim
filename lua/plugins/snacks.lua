@@ -93,9 +93,16 @@ return {
         desc = 'Toggle Zoom',
       },
       {
-        '<leader>n',
+        '<leader>np',
         function()
           Snacks.picker.notifications()
+        end,
+        desc = 'Notification Picker',
+      },
+      {
+        '<leader>n',
+        function()
+          Snacks.notifier.show_history()
         end,
         desc = 'Notification History',
       },

@@ -14,12 +14,11 @@ return {
   },
   opts = {
     colors = {
-      up_to_date = '#90D05A',
+      up_to_date = '#7F86A6',
       outdated = '#E6AC5E',
       invalid = '#FF6590',
     },
     autostart = true,
-    hide_up_to_date = true,
   },
   config = function(_, opts)
     -- NOTE: makes it so that it validates that package.json in the valid format before loading package-info.nvim

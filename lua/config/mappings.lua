@@ -84,6 +84,7 @@ local function copy_to_clipboard(path)
   vim.api.nvim_echo({ { 'Copied: ' .. path } }, false, {})
 end
 
+-- NOTE: allows for quickly copying file paths absolute, relative and file name
 vim.keymap.set('n', '<leader>yfr', function()
   copy_to_clipboard(format_path ':.')
 end, { desc = 'Copy relative file path to the clipboard' })

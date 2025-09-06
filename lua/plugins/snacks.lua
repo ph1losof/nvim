@@ -93,7 +93,7 @@ return {
         desc = 'Toggle Zoom',
       },
       {
-        '<leader>np',
+        '<leader>ns',
         function()
           Snacks.picker.notifications()
         end,

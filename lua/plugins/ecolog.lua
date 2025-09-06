@@ -1,6 +1,7 @@
 return {
   {
-    dir = '~/Projects/ecolog.nvim',
+    'ph1losof/ecolog.nvim',
+    branch = 'beta',
     keys = {
       { '<leader>e', '', desc = '+ecolog', mode = { 'n', 'v' } },
       { '<leader>el', '<Cmd>EcologShelterLinePeek<cr>', desc = 'Peek line' },

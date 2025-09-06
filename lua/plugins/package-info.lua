@@ -1,6 +1,7 @@
 return {
   'vuki656/package-info.nvim',
   dependencies = { 'MunifTanjim/nui.nvim' },
+  -- NOTE: better then ft
   event = {
     'BufRead package.json',
     'BufNewFile package.json',
@@ -21,6 +22,7 @@ return {
     hide_up_to_date = true,
   },
   config = function(_, opts)
+    -- NOTE: makes it so that it validates that package.json in the valid format before loading package-info.nvim
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     if #lines > 0 then
       local content = table.concat(lines, '\n')

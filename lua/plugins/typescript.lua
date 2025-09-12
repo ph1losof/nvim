@@ -4,7 +4,7 @@ return {
     lazy = false,
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'neovim/nvim-lspconfig',
+      { 'neovim/nvim-lspconfig', version = 'v2.4.0' },
       'saghen/blink.cmp',
     },
     opts = {},

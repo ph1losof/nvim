@@ -1,6 +1,7 @@
 return {
   {
     'neovim/nvim-lspconfig',
+    version = 'v2.4.0',
     dependencies = {
       { 'mason-org/mason.nvim', tag = 'v1.11.0', config = true }, -- NOTE: Must be loaded before dependants
       { 'mason-org/mason-lspconfig.nvim', tag = 'v1.32.0' },

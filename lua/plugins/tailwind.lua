@@ -7,6 +7,8 @@ return {
       'nvim-treesitter/nvim-treesitter',
       { 'neovim/nvim-lspconfig', version = 'v2.4.0' },
     },
-    opts = {},
+    opts = {
+      document_color = { enabled = false },
+    },
   },
 }

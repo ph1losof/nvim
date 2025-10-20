@@ -1,7 +1,6 @@
 return {
   {
-    'ph1losof/ecolog.nvim',
-    branch = 'beta',
+    dir = '~/Projects/ecolog.nvim',
     keys = {
       { '<leader>e', '', desc = '+ecolog', mode = { 'n', 'v' } },
       { '<leader>el', '<Cmd>EcologShelterLinePeek<cr>', desc = 'Peek line' },
@@ -20,19 +19,6 @@ return {
         enabled = true,
         auto_switch = true,
         notify_on_switch = false,
-      },
-      providers = {
-        {
-          pattern = '{{[%w_]+}}?$',
-          filetype = 'http',
-          extract_var = function(line, col)
-            local utils = require 'ecolog.utils'
-            return utils.extract_env_var(line, col, '{{([%w_]+)}}?$')
-          end,
-          get_completion_trigger = function()
-            return '{{'
-          end,
-        },
       },
       interpolation = {
         enabled = true,
@@ -71,6 +57,7 @@ return {
           sources = {
             ['.env.example'] = 'none',
           },
+          skip_comments = false,
           partial_mode = {
             min_mask = 5,
             show_start = 1,

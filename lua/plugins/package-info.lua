@@ -13,10 +13,10 @@ return {
     { '<leader>ni', "<cmd>lua require('package-info').install()<cr>", desc = 'Package Info' },
   },
   opts = {
-    colors = {
-      up_to_date = '#7F86A6',
-      outdated = '#E6AC5E',
-      invalid = '#FF6590',
+    highlights = {
+      up_to_date = { fg = '#7F86A6' },
+      outdated = { fg = '#E6AC5E' },
+      invalid = { fg = '#FF6590' },
     },
     autostart = true,
   },
@@ -33,9 +33,5 @@ return {
         end
       end
     end
-
-    -- WARN: fix for the issue https://github.com/vuki656/package-info.nvim/issues/155#issuecomment-2270572104 credits to Saplyn
-    vim.cmd([[highlight PackageInfoUpToDateVersion guifg=]] .. opts.colors.up_to_date)
-    vim.cmd([[highlight PackageInfoOutdatedVersion guifg=]] .. opts.colors.outdated)
   end,
 }

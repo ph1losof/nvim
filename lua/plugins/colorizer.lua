@@ -9,7 +9,6 @@ M.plugin = {
   event = { 'BufWritePre', 'BufReadPost', 'BufNewFile' },
   cond = function()
     if vim.bo.filetype == 'bigfile' then
-      vim.notify('mini.hipatterns disabled for bigfile', vim.log.levels.INFO)
       return false
     end
     return true
@@ -53,10 +52,6 @@ M.plugin = {
     }
   end,
   config = function(_, opts)
-    if vim.bo.filetype == 'bigfile' then
-      return
-    end
-
     if type(opts.tailwind) == 'table' and opts.tailwind.enabled then
       vim.api.nvim_create_autocmd('ColorScheme', {
         callback = function()

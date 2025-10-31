@@ -95,6 +95,13 @@ return {
           codeium = {
             name = 'Codeium',
             module = 'codeium.blink',
+            enabled = function()
+              local path = vim.api.nvim_buf_get_name(0)
+              if string.find(path, 'oil://', 1, true) == 1 then
+                return false
+              end
+              return true
+            end,
             score_offset = 98,
             transform_items = function(_, items)
               local CompletionItemKind = require('blink.cmp.types').CompletionItemKind

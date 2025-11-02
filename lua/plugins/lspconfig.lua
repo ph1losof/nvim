@@ -82,20 +82,6 @@ return {
         end,
       })
 
-      -- NOTE: Disables bashls for .env files
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'sh', 'bash' },
-        callback = function(args)
-          local file_name = vim.fn.expand '%:t'
-          if string.match(file_name, '^%.env') then
-            local clients = vim.lsp.get_clients { bufnr = args.buf, name = 'bashls' }
-            if clients and #clients > 0 then
-              pcall(vim.lsp.stop_client, clients)
-            end
-          end
-        end,
-      })
-
       local util = require 'lspconfig/util'
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -112,7 +98,16 @@ return {
             return root_pattern(fname)
           end,
         },
-        bashls = {},
+        bashls = {
+          handlers = {
+            ['textDocument/publishDiagnostics'] = function(err, res, ...)
+              local file_name = vim.fn.fnamemodify(vim.uri_to_fname(res.uri), ':t')
+              if string.match(file_name, '^%.env') == nil then
+                return on_publish_diagnostics(err, res, ...)
+              end
+            end,
+          },
+        },
         tailwindcss = {
           hovers = true,
           suggestions = true,

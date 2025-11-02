@@ -14,7 +14,7 @@ local oil_extension = {
     lualine_a = {
       function()
         local ok, oil = pcall(require, 'oil')
-        if ok then
+        if ok and oil and oil.get_current_dir then
           return vim.fn.fnamemodify(oil.get_current_dir(), ':~')
         else
           return ''

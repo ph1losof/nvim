@@ -53,15 +53,6 @@ return {
     config = function()
       local helpers = require 'helpers'
 
-      vim.diagnostic.config {
-        virtual_text = true,
-        signs = true,
-        underline = true,
-        update_in_insert = false,
-        severity_sort = true,
-      }
-      vim.o.winborder = 'rounded'
-
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
         callback = function(event)
@@ -91,12 +82,16 @@ return {
         end,
       })
 
+      -- NOTE: Disables bashls for .env files
       vim.api.nvim_create_autocmd('FileType', {
         pattern = { 'sh', 'bash' },
         callback = function(args)
           local file_name = vim.fn.expand '%:t'
           if string.match(file_name, '^%.env') then
-            vim.lsp.stop_client(vim.lsp.get_clients { bufnr = args.buf, name = 'bashls' })
+            local clients = vim.lsp.get_clients { bufnr = args.buf, name = 'bashls' }
+            if clients and #clients > 0 then
+              pcall(vim.lsp.stop_client, clients)
+            end
           end
         end,
       })
@@ -133,7 +128,7 @@ return {
           end,
         },
         marksman = {
-          -- This solves the problem of Marksman exiting when a new hover doc buffer (from Lspsaga) is created credits to FlawlessCasual17
+          -- NOTE: This solves the problem of Marksman exiting when a new hover doc buffer (from Lspsaga) is created credits to FlawlessCasual17
           ---@param bufnr number
           autostart = function(bufnr)
             if helpers.is_lspsaga_peek_window(bufnr) then

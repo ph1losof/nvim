@@ -1,7 +1,8 @@
 return {
   {
     'stevearc/conform.nvim',
-    lazy = false,
+    event = 'BufWritePre',
+    cmd = 'ConformInfo',
     opts = {
       formatters_by_ft = {
         lua = { 'stylua' },
@@ -33,7 +34,7 @@ return {
       end,
       default_format_opts = {
         timeout_ms = 3000,
-        async = false,
+        async = true,
         quiet = false,
         lsp_format = 'fallback',
       },

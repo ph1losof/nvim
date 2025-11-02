@@ -91,15 +91,15 @@ vim.api.nvim_create_autocmd({ 'UIEnter', 'ColorScheme' }, {
     if not normal.bg then
       return
     end
-    io.write(string.format('\027Ptmux;\027\027]11;#%06x\007\027\\', normal.bg))
-    io.write(string.format('\027]11;#%06x\027\\', normal.bg))
+    pcall(io.write, string.format('\027Ptmux;\027\027]11;#%06x\007\027\\', normal.bg))
+    pcall(io.write, string.format('\027]11;#%06x\027\\', normal.bg))
   end,
 })
 
 vim.api.nvim_create_autocmd('UILeave', {
   callback = function()
-    io.write '\027Ptmux;\027\027]111;\007\027\\'
-    io.write '\027]111\027\\'
+    pcall(io.write, '\027Ptmux;\027\027]111;\007\027\\')
+    pcall(io.write, '\027]111\027\\')
   end,
 })
 

@@ -1,13 +1,37 @@
 return {
   {
     'neovim/nvim-lspconfig',
-    version = 'v2.4.0',
     dependencies = {
-      { 'mason-org/mason.nvim', tag = 'v1.11.0', config = true }, -- NOTE: Must be loaded before dependants
-      { 'mason-org/mason-lspconfig.nvim', tag = 'v1.32.0' },
+      {
+        'mason-org/mason.nvim',
+        ui = {
+          icons = {
+            package_installed = '✓',
+            package_pending = '➜',
+            package_uninstalled = '✗',
+          },
+        },
+        config = true,
+      }, -- NOTE: Must be loaded before dependants
+      { 'mason-org/mason-lspconfig.nvim' },
       -- NOTE: installing not using mason solves https://github.com/nanotee/sqls.nvim/issues/23
       { 'nanotee/sqls.nvim' },
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      {
+        'WhoIsSethDaniel/mason-tool-installer.nvim',
+        dependencies = {
+          'williamboman/mason.nvim',
+        },
+        opts = {
+          ensure_installed = {
+            'prettier',
+            'stylua',
+            'isort',
+            'black',
+            'pylint',
+            'eslint_d',
+          },
+        },
+      },
       { 'j-hui/fidget.nvim', opts = {
         notification = {
           window = {
@@ -28,6 +52,15 @@ return {
     },
     config = function()
       local helpers = require 'helpers'
+
+      vim.diagnostic.config {
+        virtual_text = true,
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+      }
+      vim.o.winborder = 'rounded'
 
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
@@ -57,12 +90,21 @@ return {
           end
         end,
       })
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'sh', 'bash' },
+        callback = function(args)
+          local file_name = vim.fn.expand '%:t'
+          if string.match(file_name, '^%.env') then
+            vim.lsp.stop_client(vim.lsp.get_clients { bufnr = args.buf, name = 'bashls' })
+          end
+        end,
+      })
+
       local util = require 'lspconfig/util'
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
-
-      local on_publish_diagnostics = vim.lsp.diagnostic.on_publish_diagnostics
 
       local servers = {
         html = {},
@@ -75,16 +117,7 @@ return {
             return root_pattern(fname)
           end,
         },
-        bashls = {
-          handlers = {
-            ['textDocument/publishDiagnostics'] = function(err, res, ...)
-              local file_name = vim.fn.fnamemodify(vim.uri_to_fname(res.uri), ':t')
-              if string.match(file_name, '^%.env') == nil then
-                return on_publish_diagnostics(err, res, ...)
-              end
-            end,
-          },
-        },
+        bashls = {},
         tailwindcss = {
           hovers = true,
           suggestions = true,
@@ -198,16 +231,19 @@ return {
         vim.cmd('MasonInstall ' .. table.concat(ensure_installed, ' '))
       end, {})
 
+      vim.lsp.config('*', {
+        capabilities = capabilities,
+      })
+
+      for server_name, config in pairs(servers) do
+        local server_config = vim.tbl_deep_extend('force', {}, config)
+        server_config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, config.capabilities or {})
+        vim.lsp.config(server_name, server_config)
+      end
+
       require('mason-lspconfig').setup {
-        automatic_installation = false,
         ensure_installed = {},
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
+        automatic_enable = true,
       }
     end,
   },

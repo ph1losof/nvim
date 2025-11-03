@@ -6,7 +6,7 @@ return {
       { 'K', '<cmd>Lspsaga hover_doc<CR>', desc = 'Hover Doc' },
       { '<leader>gd', '<cmd>Lspsaga goto_definition<CR>', desc = 'Go to definition' },
       { '<leader>rn', '<cmd>Lspsaga rename<CR>', desc = 'Rename' },
-      { '<leager>gp', '<cmd>Lspsaga peek_definition<CR>', desc = 'Preview Definition' },
+      { '<leader>gp', '<cmd>Lspsaga peek_definition<CR>', desc = 'Preview Definition' },
       { '<leader>ca', '<cmd>Lspsaga code_action<CR>', desc = 'Code Action' },
       { '<leader>ol', '<cmd>Lspsaga outline<CR>', desc = 'Outline' },
     },

@@ -19,9 +19,9 @@ return {
     keys = {
       {
         '<leader>mp',
-        ft = 'markdown',
         '<cmd>MarkdownPreviewToggle<cr>',
         desc = 'Markdown Preview',
+        ft = 'markdown',
       },
     },
     init = function()

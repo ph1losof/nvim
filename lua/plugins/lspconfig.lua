@@ -53,15 +53,6 @@ return {
     config = function()
       local helpers = require 'helpers'
 
-      vim.diagnostic.config {
-        virtual_text = true,
-        signs = true,
-        underline = true,
-        update_in_insert = false,
-        severity_sort = true,
-      }
-      vim.o.winborder = 'rounded'
-
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
         callback = function(event)
@@ -91,16 +82,6 @@ return {
         end,
       })
 
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'sh', 'bash' },
-        callback = function(args)
-          local file_name = vim.fn.expand '%:t'
-          if string.match(file_name, '^%.env') then
-            vim.lsp.stop_client(vim.lsp.get_clients { bufnr = args.buf, name = 'bashls' })
-          end
-        end,
-      })
-
       local util = require 'lspconfig/util'
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -117,7 +98,16 @@ return {
             return root_pattern(fname)
           end,
         },
-        bashls = {},
+        bashls = {
+          handlers = {
+            ['textDocument/publishDiagnostics'] = function(err, res, ...)
+              local file_name = vim.fn.fnamemodify(vim.uri_to_fname(res.uri), ':t')
+              if string.match(file_name, '^%.env') == nil then
+                return on_publish_diagnostics(err, res, ...)
+              end
+            end,
+          },
+        },
         tailwindcss = {
           hovers = true,
           suggestions = true,
@@ -133,7 +123,7 @@ return {
           end,
         },
         marksman = {
-          -- This solves the problem of Marksman exiting when a new hover doc buffer (from Lspsaga) is created credits to FlawlessCasual17
+          -- NOTE: This solves the problem of Marksman exiting when a new hover doc buffer (from Lspsaga) is created credits to FlawlessCasual17
           ---@param bufnr number
           autostart = function(bufnr)
             if helpers.is_lspsaga_peek_window(bufnr) then

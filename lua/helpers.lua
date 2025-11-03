@@ -1,8 +1,13 @@
 local M = {}
 
----LSPSaga helper to check for peek definition window
+--- NOTE: This prevents issues like marksman LSP exiting when peek windows are created.
+
+--- Check if buffer is an LSPSaga peek definition window.
+--- LSPSaga creates special markdown preview buffers for peeking definitions.
+--- These buffers should not trigger LSP/linting as they are temporary non-editable previews.
+--- See: https://github.com/nvimdev/lspsaga.nvim/issues/1352
 ---@param bufnr number The buffer number to check.
----@return boolean true if the buffer should be linted, false otherwise.
+---@return boolean true if buffer is an LSPSaga peek window, false otherwise.
 function M.is_lspsaga_peek_window(bufnr)
   local filetype = vim.bo[bufnr].filetype
   local buftype = vim.bo[bufnr].buftype

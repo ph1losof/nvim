@@ -10,7 +10,6 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    dependencies = { 'windwp/nvim-ts-autotag' },
     opts = {
       incremental_selection = {
         enable = true,

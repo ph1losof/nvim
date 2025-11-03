@@ -1,10 +1,10 @@
 return {
   {
     'pmizio/typescript-tools.nvim',
-    lazy = false,
+    ft = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact' },
     dependencies = {
       'nvim-lua/plenary.nvim',
-      { 'neovim/nvim-lspconfig', version = 'v2.4.0' },
+      'neovim/nvim-lspconfig',
       'saghen/blink.cmp',
     },
     opts = {},
@@ -14,12 +14,8 @@ return {
       { '<leader>ami', '<cmd>TSToolsAddMissingImports<cr>', desc = 'Add Missing Imports' },
     },
     config = function()
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
-
       local api = require 'typescript-tools.api'
       require('typescript-tools').setup {
-        capabilities = capabilities,
         handlers = {
           -- NOTE: eslint handles 6133, 1109, 6192, 6196 (unused vars, imports, declarations)
           ['textDocument/publishDiagnostics'] = api.filter_diagnostics { 80006, 6133, 1109, 6192, 6196 },

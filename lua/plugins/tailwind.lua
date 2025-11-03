@@ -5,7 +5,7 @@ return {
     build = ':UpdateRemotePlugins',
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
-      { 'neovim/nvim-lspconfig', version = 'v2.4.0' },
+      'neovim/nvim-lspconfig',
     },
     opts = {
       document_color = { enabled = false },

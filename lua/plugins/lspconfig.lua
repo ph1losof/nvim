@@ -103,7 +103,7 @@ return {
             ['textDocument/publishDiagnostics'] = function(err, res, ...)
               local file_name = vim.fn.fnamemodify(vim.uri_to_fname(res.uri), ':t')
               if string.match(file_name, '^%.env') == nil then
-                return on_publish_diagnostics(err, res, ...)
+                return vim.lsp.diagnostic.on_publish_diagnostics(err, res, ...)
               end
             end,
           },
@@ -233,8 +233,10 @@ return {
 
       require('mason-lspconfig').setup {
         ensure_installed = {},
-        automatic_enable = true,
       }
+
+      local server_names = vim.tbl_keys(servers)
+      vim.lsp.enable(server_names)
     end,
   },
 }

@@ -15,6 +15,7 @@ return {
     },
     config = function()
       local api = require 'typescript-tools.api'
+      local lsputil = require('lspconfig.util')
       require('typescript-tools').setup {
         handlers = {
           -- NOTE: eslint handles 6133, 1109, 6192, 6196 (unused vars, imports, declarations)
@@ -36,7 +37,7 @@ return {
         end,
         single_file_support = false,
         root_dir = function(fname)
-          local root_pattern = require('lspconfig').util.root_pattern 'package.json'
+          local root_pattern = lsputil.root_pattern 'package.json'
           return root_pattern(fname)
         end,
         filetypes = {

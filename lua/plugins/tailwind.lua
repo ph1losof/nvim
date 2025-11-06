@@ -5,10 +5,12 @@ return {
     build = ':UpdateRemotePlugins',
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
-      'neovim/nvim-lspconfig',
     },
     opts = {
       document_color = { enabled = false },
+      server = {
+        override = false, -- Disable auto-setup since we configure tailwindcss LSP manually
+      },
     },
   },
 }

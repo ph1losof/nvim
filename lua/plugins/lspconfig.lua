@@ -82,7 +82,8 @@ return {
         end,
       })
 
-      local util = require 'lspconfig/util'
+      -- Still use lspconfig.util for utility functions like root_pattern
+      local lsputil = require('lspconfig.util')
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
@@ -94,7 +95,7 @@ return {
         eslint = {},
         denols = {
           root_dir = function(fname)
-            local root_pattern = require('lspconfig').util.root_pattern('deno.json', 'deno.jsonc')
+            local root_pattern = lsputil.root_pattern('deno.json', 'deno.jsonc')
             return root_pattern(fname)
           end,
         },
@@ -112,13 +113,8 @@ return {
           hovers = true,
           suggestions = true,
           root_dir = function(fname)
-            local root_pattern = require('lspconfig').util.root_pattern(
-              'tailwind.config.cjs',
-              'tailwind.config.ts',
-              'tailwind.config.mjs',
-              'tailwind.config.js',
-              'postcss.config.js'
-            )
+            local root_pattern =
+              lsputil.root_pattern('tailwind.config.cjs', 'tailwind.config.ts', 'tailwind.config.mjs', 'tailwind.config.js', 'postcss.config.js')
             return root_pattern(fname)
           end,
         },
@@ -142,7 +138,7 @@ return {
         sqls = {},
         rust_analyzer = {
           file_types = { 'rust' },
-          root_dir = util.root_pattern 'Config.toml',
+          root_dir = lsputil.root_pattern 'Config.toml',
         },
         lua_ls = {
           settings = {

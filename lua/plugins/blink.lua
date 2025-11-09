@@ -118,7 +118,6 @@ return {
         },
         default = { 'ecolog', 'codeium', 'snippets', 'lazydev', 'lsp', 'path', 'buffer' },
         per_filetype = {
-          codecompanion = { 'codecompanion' },
           sql = { 'snippets', 'dadbod', 'buffer' },
         },
       },

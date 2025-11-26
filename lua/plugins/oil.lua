@@ -82,18 +82,13 @@ end
 -- stylua: ignore end
 
 -- NOTE: adds support for snacks rename feature in oil.nvim
-api.nvim_create_autocmd('User', {
+vim.api.nvim_create_autocmd('User', {
   pattern = 'OilActionsPost',
   callback = function(event)
-    if event.data.err then
-      return
-    end
-    for _, action in ipairs(event.data.actions) do
-      if action.type == 'move' then
-        local ok, snacks = pcall(require, 'snacks')
-        if ok and snacks and snacks.rename then
-          snacks.rename.on_rename_file(action.src, action.dest)
-        end
+    if event.data.actions.type == 'move' then
+      local ok, snacks = pcall(require, 'snacks')
+      if ok and snacks and snacks.rename then
+        snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
       end
     end
   end,

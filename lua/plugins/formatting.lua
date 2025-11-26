@@ -15,6 +15,7 @@ return {
         scss = { 'prettierd', 'prettier', stop_after_first = true },
         less = { 'prettierd', 'prettier', stop_after_first = true },
         html = { 'prettierd', 'prettier', stop_after_first = true },
+        python = { 'ruff_format', 'ruff' },
         json = { 'prettierd', 'prettier', stop_after_first = true },
         jsonc = { 'prettierd', 'prettier', stop_after_first = true },
         astro = { 'prettier', stop_after_first = true },

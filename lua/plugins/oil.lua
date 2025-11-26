@@ -1,47 +1,80 @@
--- NOTE: currently oil.nvim is being loaded on startup to immdiately open the parent directory,
--- this checks for specific conditions whether to load it or not. The following piece of code is taken from dashboard plugin - alpha.nvim
--- taken from https://github.com/goolord/alpha-nvim/blob/b6f4129302db197a7249e67a90de3f2b676de13e/lua/alpha.lua#L570
+-- NOTE: currently oil.nvim is being loaded on startup to immediately open the parent directory,
+-- this checks for specific conditions whether to load it or not.
+-- Improved version based on snacks.dashboard and alpha.nvim patterns
 
 -- stylua: ignore start
 local function should_skip_oil()
-    -- don't start when opening a file
-    if vim.fn.argc() > 0 then return true end
+  local buf = vim.api.nvim_get_current_buf()
 
-    -- Do not open oil if the current buffer has any lines (something opened explicitly).
-    local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
-    if #lines > 1 or (#lines == 1 and lines[1]:len() > 0) then return true end
-
-    -- Skip when there are several listed buffers.
-    for _, buf_id in pairs(vim.api.nvim_list_bufs()) do
-        local bufinfo = vim.fn.getbufinfo(buf_id)
-        if bufinfo.listed == 1 and #bufinfo.windows > 0
-            then return true
-        end
+  -- Handle directory argument - should OPEN oil for single directory arg
+  if vim.fn.argc(-1) == 1 then
+    local arg = vim.fn.argv(0) --[[@as string]]
+    if arg ~= "" and vim.fn.isdirectory(arg) == 1 then
+      return false -- Don't skip, open oil for directory
     end
+  end
 
-    -- Handle nvim -M
-    if not vim.o.modifiable then return true end
+  -- Don't start when opening file(s)
+  if vim.fn.argc(-1) > 0 then return true end
 
-    ---@diagnostic disable-next-line: undefined-field
-    for _, arg in pairs(vim.v.argv) do
-        -- whitelisted arguments
-        -- always open
-        if arg == "--startuptime"
-        then return false
-        end
+  -- Don't open if Neovim was invoked with a command (e.g., `nvim +SomeCommand`)
+  if vim.api.nvim_buf_get_name(buf) ~= "" then return true end
 
-        -- blacklisted arguments
-        -- always skip
-        if arg == "-b"
-            -- commands, typically used for scripting
-            or arg == "-c" or vim.startswith(arg, "+")
-            or arg == "-S"
-        then return true
-        end
+  -- Do not open oil if the current buffer has any lines
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  if #lines > 1 or (#lines == 1 and #lines[1] > 0) then return true end
+
+  -- Check for only one non-floating window
+  local wins = vim.tbl_filter(function(win)
+    local b = vim.api.nvim_win_get_buf(win)
+    local config = vim.api.nvim_win_get_config(win)
+    return config.relative == "" and vim.bo[b].buftype ~= "nofile"
+  end, vim.api.nvim_list_wins())
+  if #wins ~= 1 or vim.api.nvim_win_get_buf(wins[1]) ~= buf then
+    return true
+  end
+
+  -- Skip when there are several listed buffers
+  for _, buf_id in pairs(vim.api.nvim_list_bufs()) do
+    if buf_id ~= buf then
+      local bufinfo = vim.fn.getbufinfo(buf_id)[1]
+      if bufinfo and bufinfo.listed == 1 and #bufinfo.windows > 0 then
+        return true
+      end
     end
+  end
 
-    -- base case: don't skip
-    return false
+  -- Don't open if buffer is modified
+  if vim.bo[buf].modified then return true end
+
+  -- Check for headless mode
+  local uis = vim.api.nvim_list_uis()
+  if #uis == 0 then return true end
+
+  -- Don't open if stdin is piped (e.g., `echo "text" | nvim`)
+  if uis[1].stdout_tty and not uis[1].stdin_tty then return true end
+
+  -- Handle nvim -M
+  if not vim.o.modifiable then return true end
+
+  -- Check argv for specific flags
+  ---@diagnostic disable-next-line: undefined-field
+  for _, arg in pairs(vim.v.argv) do
+    -- Whitelisted arguments - always open
+    if arg == "--startuptime" then
+      return false
+    end
+    -- Blacklisted arguments - always skip
+    if arg == "-b"
+      or arg == "-c" or vim.startswith(arg, "+")
+      or arg == "-S"
+    then
+      return true
+    end
+  end
+
+  -- Base case: don't skip
+  return false
 end
 -- stylua: ignore end
 
@@ -49,10 +82,15 @@ end
 vim.api.nvim_create_autocmd('User', {
   pattern = 'OilActionsPost',
   callback = function(event)
-    if event.data.actions.type == 'move' then
-      local ok, snacks = pcall(require, 'snacks')
-      if ok and snacks and snacks.rename then
-        snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
+    if event.data.err then
+      return
+    end
+    for _, action in ipairs(event.data.actions) do
+      if action.type == 'move' then
+        local ok, snacks = pcall(require, 'snacks')
+        if ok and snacks and snacks.rename then
+          snacks.rename.on_rename_file(action.src, action.dest)
+        end
       end
     end
   end,
@@ -85,8 +123,10 @@ return {
         },
       }
 
-      if should_skip_oil() == false then
-        vim.cmd 'Oil'
+      if not should_skip_oil() then
+        vim.schedule(function()
+          require('oil').open()
+        end)
       end
     end,
     lazy = false,

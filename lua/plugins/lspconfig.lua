@@ -24,6 +24,7 @@ return {
         opts = {
           ensure_installed = {
             'prettier',
+            'ruff',
             'stylua',
             'isort',
             'black',
@@ -83,7 +84,7 @@ return {
       })
 
       -- Still use lspconfig.util for utility functions like root_pattern
-      local lsputil = require('lspconfig.util')
+      local lsputil = require 'lspconfig.util'
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
@@ -92,6 +93,18 @@ return {
         html = {},
         cssls = {},
         astro = {},
+        pyright = {
+          settings = {
+            analysis = { typeCheckingMode = 'strict', autoImportCompletions = true, autoSearchPaths = true, useLibraryCodeForTypes = true },
+          },
+        },
+        ruff = {
+          init_options = {
+            settings = {
+              organizeImports = true,
+            },
+          },
+        },
         eslint = {},
         denols = {
           root_dir = function(fname)
@@ -160,6 +173,9 @@ return {
         'prisma-language-server',
         'luacheck',
         'stylua',
+
+        -- Python
+        'pyright',
 
         -- SQL
         'sqlfluff',

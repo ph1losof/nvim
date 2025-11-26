@@ -27,7 +27,7 @@
   "mini.diff": { "branch": "main", "commit": "fbb93ea1728e7c9d0944df8bd022a68402bd2e7e" },
   "mini.hipatterns": { "branch": "main", "commit": "add8d8abad602787377ec5d81f6b248605828e0f" },
   "mini.move": { "branch": "main", "commit": "4d214202d71e0a4066b6288176bbe88f268f9777" },
-  "morta": { "branch": "2.0", "commit": "709c3074442f8c948d991aa31ed484d275553a55" },
+  "morta": { "branch": "2.0", "commit": "1d7aa1de28176865713b252a477bbb0fe312da25" },
   "neotest": { "branch": "master", "commit": "deadfb1af5ce458742671ad3a013acb9a6b41178" },
   "neotest-bun": { "branch": "main", "commit": "453759015c4c87792a720fa3cc7b643cebe9d4cf" },
   "neotest-plenary": { "branch": "master", "commit": "3523adcf9ffaad1911960c5813b0136c1b63a2ec" },

@@ -1,54 +1,40 @@
 -- NOTE: currently oil.nvim is being loaded on startup to immediately open the parent directory,
 -- this checks for specific conditions whether to load it or not.
 -- Improved version based on snacks.dashboard and alpha.nvim patterns
+-- Optimized to prevent flash and improve startup performance
+
+local api = vim.api
+local fn = vim.fn
+local bo = vim.bo
 
 -- stylua: ignore start
 local function should_skip_oil()
-  local buf = vim.api.nvim_get_current_buf()
+  -- PERF: Early return checks first (fastest operations)
+  local argc = fn.argc(-1)
 
   -- Handle directory argument - should OPEN oil for single directory arg
-  if vim.fn.argc(-1) == 1 then
-    local arg = vim.fn.argv(0) --[[@as string]]
-    if arg ~= "" and vim.fn.isdirectory(arg) == 1 then
+  if argc == 1 then
+    local arg = fn.argv(0) --[[@as string]]
+    if arg ~= "" and fn.isdirectory(arg) == 1 then
       return false -- Don't skip, open oil for directory
     end
   end
 
   -- Don't start when opening file(s)
-  if vim.fn.argc(-1) > 0 then return true end
+  if argc > 0 then return true end
+
+  local buf = api.nvim_get_current_buf()
 
   -- Don't open if Neovim was invoked with a command (e.g., `nvim +SomeCommand`)
-  if vim.api.nvim_buf_get_name(buf) ~= "" then return true end
+  if api.nvim_buf_get_name(buf) ~= "" then return true end
 
-  -- Do not open oil if the current buffer has any lines
-  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
   if #lines > 1 or (#lines == 1 and #lines[1] > 0) then return true end
 
-  -- Check for only one non-floating window
-  local wins = vim.tbl_filter(function(win)
-    local b = vim.api.nvim_win_get_buf(win)
-    local config = vim.api.nvim_win_get_config(win)
-    return config.relative == "" and vim.bo[b].buftype ~= "nofile"
-  end, vim.api.nvim_list_wins())
-  if #wins ~= 1 or vim.api.nvim_win_get_buf(wins[1]) ~= buf then
-    return true
-  end
+  if bo[buf].modified then return true end
 
-  -- Skip when there are several listed buffers
-  for _, buf_id in pairs(vim.api.nvim_list_bufs()) do
-    if buf_id ~= buf then
-      local bufinfo = vim.fn.getbufinfo(buf_id)[1]
-      if bufinfo and bufinfo.listed == 1 and #bufinfo.windows > 0 then
-        return true
-      end
-    end
-  end
-
-  -- Don't open if buffer is modified
-  if vim.bo[buf].modified then return true end
-
-  -- Check for headless mode
-  local uis = vim.api.nvim_list_uis()
+  -- Check for headless mode early
+  local uis = api.nvim_list_uis()
   if #uis == 0 then return true end
 
   -- Don't open if stdin is piped (e.g., `echo "text" | nvim`)
@@ -57,19 +43,36 @@ local function should_skip_oil()
   -- Handle nvim -M
   if not vim.o.modifiable then return true end
 
-  -- Check argv for specific flags
   ---@diagnostic disable-next-line: undefined-field
   for _, arg in pairs(vim.v.argv) do
-    -- Whitelisted arguments - always open
-    if arg == "--startuptime" then
-      return false
-    end
-    -- Blacklisted arguments - always skip
-    if arg == "-b"
-      or arg == "-c" or vim.startswith(arg, "+")
-      or arg == "-S"
-    then
+    if arg == "--startuptime" then return false end
+    if arg == "-b" or arg == "-c" or arg == "-S" or vim.startswith(arg, "+") then
       return true
+    end
+  end
+
+  local win_count = 0
+  local valid_win
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local b = api.nvim_win_get_buf(win)
+    if api.nvim_win_get_config(win).relative == "" and bo[b].buftype ~= "nofile" then
+      win_count = win_count + 1
+      valid_win = win
+      if win_count > 1 then return true end -- Early exit if multiple windows
+    end
+  end
+
+  if win_count ~= 1 or api.nvim_win_get_buf(valid_win) ~= buf then
+    return true
+  end
+
+  -- Skip when there are several listed buffers
+  for _, buf_id in pairs(api.nvim_list_bufs()) do
+    if buf_id ~= buf then
+      local bufinfo = fn.getbufinfo(buf_id)[1]
+      if bufinfo and bufinfo.listed == 1 and #bufinfo.windows > 0 then
+        return true
+      end
     end
   end
 
@@ -79,7 +82,7 @@ end
 -- stylua: ignore end
 
 -- NOTE: adds support for snacks rename feature in oil.nvim
-vim.api.nvim_create_autocmd('User', {
+api.nvim_create_autocmd('User', {
   pattern = 'OilActionsPost',
   callback = function(event)
     if event.data.err then
@@ -103,6 +106,28 @@ return {
     keys = {
       { '<C-n>', '<cmd>Oil<cr>', desc = 'Open parent directory' },
     },
+    init = function()
+      -- PERF: Pre-check and hide UI elements before plugin loads
+      if not should_skip_oil() then
+        -- Cache original values
+        local showtabline = vim.o.showtabline
+        local laststatus = vim.o.laststatus
+
+        -- Hide UI elements immediately
+        vim.o.shortmess = vim.o.shortmess .. 'I' -- Disable intro message
+        vim.o.showtabline = 0
+        vim.o.laststatus = 0
+
+        -- Restore on first BufEnter (when Oil buffer loads)
+        api.nvim_create_autocmd('BufEnter', {
+          once = true,
+          callback = function()
+            vim.o.showtabline = showtabline
+            vim.o.laststatus = laststatus
+          end,
+        })
+      end
+    end,
     config = function()
       require('oil').setup {
         columns = { 'icon' },
@@ -124,11 +149,10 @@ return {
       }
 
       if not should_skip_oil() then
-        vim.schedule(function()
-          require('oil').open()
-        end)
+        require('oil').open()
       end
     end,
     lazy = false,
+    priority = 500,
   },
 }

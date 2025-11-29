@@ -15,8 +15,13 @@ return {
     },
     config = function()
       local api = require 'typescript-tools.api'
-      local lsputil = require('lspconfig.util')
+      local lsputil = require 'lspconfig.util'
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
+
       require('typescript-tools').setup {
+        capabilities = capabilities,
         handlers = {
           -- NOTE: eslint handles 6133, 1109, 6192, 6196 (unused vars, imports, declarations)
           ['textDocument/publishDiagnostics'] = api.filter_diagnostics { 80006, 6133, 1109, 6192, 6196 },
@@ -35,11 +40,7 @@ return {
           client.server_capabilities.documentFormattingProvider = false
           client.server_capabilities.documentRangeFormattingProvider = false
         end,
-        single_file_support = false,
-        root_dir = function(fname)
-          local root_pattern = lsputil.root_pattern 'package.json'
-          return root_pattern(fname)
-        end,
+        single_file_support = true,
         filetypes = {
           'typescript',
           'typescriptreact',

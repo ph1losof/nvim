@@ -8,9 +8,10 @@ return {
     'BufWinEnter package.json',
   },
   keys = {
-    { '<leader>nc', "<cmd>lua require('package-info').change_version()<cr>", desc = 'Package Info' },
-    { '<leader>nd', "<cmd>lua require('package-info').delete()<cr>", desc = 'Package Info' },
-    { '<leader>ni', "<cmd>lua require('package-info').install()<cr>", desc = 'Package Info' },
+    { '<leader>nc', "<cmd>lua require('package-info').change_version()<cr>", desc = 'Package Info Change Version' },
+    { '<leader>nd', "<cmd>lua require('package-info').delete()<cr>", desc = 'Package Info Delete' },
+    { '<leader>ni', "<cmd>lua require('package-info').install()<cr>", desc = 'Package Info Install' },
+    { '<leader>nu', "<cmd>lua require('package-info').update()<cr>", desc = 'Package Info Update' },
   },
   opts = {
     highlights = {

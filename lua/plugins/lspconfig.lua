@@ -83,9 +83,6 @@ return {
         end,
       })
 
-      -- Still use lspconfig.util for utility functions like root_pattern
-      local lsputil = require 'lspconfig.util'
-
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
 
@@ -107,9 +104,11 @@ return {
         },
         eslint = {},
         denols = {
-          root_dir = function(fname)
-            local root_pattern = lsputil.root_pattern('deno.json', 'deno.jsonc')
-            return root_pattern(fname)
+          root_dir = function(bufnr, on_dir)
+            local root = vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' })
+            if root then
+              on_dir(root)
+            end
           end,
         },
         bashls = {
@@ -125,10 +124,11 @@ return {
         tailwindcss = {
           hovers = true,
           suggestions = true,
-          root_dir = function(fname)
-            local root_pattern =
-              lsputil.root_pattern('tailwind.config.cjs', 'tailwind.config.ts', 'tailwind.config.mjs', 'tailwind.config.js', 'postcss.config.js')
-            return root_pattern(fname)
+          root_dir = function(bufnr, on_dir)
+            local root = vim.fs.root(bufnr, { 'tailwind.config.cjs', 'tailwind.config.ts', 'tailwind.config.mjs', 'tailwind.config.js', 'postcss.config.js' })
+            if root then
+              on_dir(root)
+            end
           end,
         },
         marksman = {
@@ -151,7 +151,12 @@ return {
         sqls = {},
         rust_analyzer = {
           file_types = { 'rust' },
-          root_dir = lsputil.root_pattern 'Config.toml',
+          root_dir = function(bufnr, on_dir)
+            local root = vim.fs.root(bufnr, { 'Cargo.toml', 'Makefile' })
+            if root then
+              on_dir(root)
+            end
+          end,
         },
         lua_ls = {
           settings = {

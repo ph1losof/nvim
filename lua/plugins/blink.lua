@@ -96,11 +96,11 @@ return {
             name = 'Codeium',
             module = 'codeium.blink',
             enabled = function()
-              local path = vim.api.nvim_buf_get_name(0)
-              if string.find(path, 'oil://', 1, true) == 1 then
-                return false
+              if vim.fn.getcmdtype() ~= '' then
+                return true
               end
-              return true
+
+              return not vim.tbl_contains({ 'oil', 'sagarename' }, vim.bo.filetype)
             end,
             score_offset = 98,
             transform_items = function(_, items)

@@ -202,6 +202,35 @@ return {
         end,
         desc = 'LSP Workspace Symbols',
       },
+
+      {
+        '<leader>fgi',
+        function()
+          Snacks.picker.gh_issue()
+        end,
+        desc = 'GitHub Issues (open)',
+      },
+      {
+        '<leader>fgI',
+        function()
+          Snacks.picker.gh_issue { state = 'all' }
+        end,
+        desc = 'GitHub Issues (all)',
+      },
+      {
+        '<leader>fgp',
+        function()
+          Snacks.picker.gh_pr()
+        end,
+        desc = 'GitHub Pull Requests (open)',
+      },
+      {
+        '<leader>fgP',
+        function()
+          Snacks.picker.gh_pr { state = 'all' }
+        end,
+        desc = 'GitHub Pull Requests (all)',
+      },
     },
     init = function()
       require('snacks').util.set_hl({

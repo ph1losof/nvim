@@ -17,6 +17,7 @@ local ecolog_spec = {
   },
   opts = {
     preferred_environment = 'local',
+    vim_env = true,
     types = true,
     monorepo = {
       enabled = true,

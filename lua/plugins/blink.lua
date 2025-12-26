@@ -100,7 +100,7 @@ return {
                 return true
               end
 
-              return not vim.tbl_contains({ 'oil', 'sagarename' }, vim.bo.filetype)
+              return not vim.tbl_contains({ 'oil', 'sagarename', 'opencode_ask' }, vim.bo.filetype)
             end,
             score_offset = 98,
             transform_items = function(_, items)

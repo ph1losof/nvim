@@ -100,7 +100,7 @@ vim.opt.colorcolumn = '80'
 
 vim.filetype.add {
   pattern = {
-    ['%.env%.[%w_.-]+'] = 'sh',
+    ['%.env%.[%w_.-]+'] = 'dotenv',
     ['nohup.out'] = 'log',
   },
 }

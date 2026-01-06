@@ -1,4 +1,7 @@
--- WARN: Check if local development directory exists, fallback to official repo. Can be removed, but required for my workflow
+-- NOTE: Im in the process of switching to https://github.com/ph1losof/ecolog-lsp soon will make a neovim plugin for this lsp
+
+return {}
+--[[ -- WARN: Check if local development directory exists, fallback to official repo. Can be removed, but required for my workflow
 local local_ecolog = vim.fn.expand '~/Projects/ecolog.nvim'
 local use_local = vim.uv.fs_stat(local_ecolog) ~= nil
 
@@ -81,4 +84,4 @@ local ecolog_spec = {
   },
 }
 
-return { ecolog_spec }
+return { ecolog_spec } ]]

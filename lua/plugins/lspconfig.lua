@@ -87,6 +87,17 @@ return {
       capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
 
       local servers = {
+        ecolog_lsp = {
+          cmd = { '/Users/tentacles/Projects/ecolog/target/release/ecolog-lsp' },
+          filetypes = { 'javascript', 'typescript', 'python', 'rust', 'go', 'ruby', 'php', 'lua', 'dotenv' },
+          capabilities = capabilities,
+          root_dir = function(bufnr, on_dir)
+            local root = vim.fs.root(bufnr, { '.ecolog.toml', 'package.json', 'Cargo.toml', '.git' })
+            if root then
+              on_dir(root)
+            end
+          end,
+        },
         html = {},
         cssls = {},
         astro = {},
@@ -240,6 +251,12 @@ return {
 
       vim.lsp.config('*', {
         capabilities = capabilities,
+      })
+
+      vim.lsp.config('ecolog_lsp', {
+        cmd = { '/Users/tentacles/Projects/ecolog/target/release/ecolog-lsp' },
+        filetypes = { 'javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'python', 'rust', 'go', 'ruby', 'php', 'lua', 'sh' },
+        root_markers = { '.ecolog.toml', 'package.json', 'Cargo.toml', '.git' },
       })
 
       for server_name, config in pairs(servers) do

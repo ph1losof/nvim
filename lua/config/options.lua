@@ -98,9 +98,21 @@ vim.opt.laststatus = 3
 -- enable colorcolumn
 vim.opt.colorcolumn = '80'
 
+local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+
+parser_config.edf = {
+  install_info = {
+    url = '/Users/tentacles/Projects/tree-sitter-edf', -- Local path
+    files = { 'src/parser.c', 'src/scanner.c' },
+    generate_requires_npm = true,
+  },
+  filetype = 'edf',
+}
+
 vim.filetype.add {
   pattern = {
-    ['%.env%.[%w_.-]+'] = 'dotenv',
+    ['%.env'] = 'edf',
+    ['%.env%..*'] = 'edf',
     ['nohup.out'] = 'log',
   },
 }

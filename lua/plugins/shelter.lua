@@ -1,6 +1,6 @@
 return {
   'ph1losof/shelter.nvim',
-  build = 'lua build.lua',
+  build = 'build.lua',
   opts = {
     skip_comments = false,
     default_mode = 'partial',

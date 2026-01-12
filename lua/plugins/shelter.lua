@@ -1,6 +1,8 @@
 return {
   'ph1losof/shelter.nvim',
-  build = 'build.lua',
+  keys = {
+    { '<leader>st', '<cmd>Shelter toggle<cr>', desc = 'Toggle masking' },
+  },
   opts = {
     skip_comments = false,
     default_mode = 'partial',

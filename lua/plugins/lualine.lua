@@ -48,6 +48,9 @@ return {
             'filename',
             harpoon_section,
           },
+          lualine_x = {
+            require('ecolog.statusline.lualine').create {},
+          },
           lualine_y = {
             'encoding',
             'fileformat',

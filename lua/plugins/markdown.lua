@@ -9,6 +9,9 @@ return {
     ft = ft,
     opts = {
       completions = { blink = { enabled = true } },
+      code = {
+        sign = false,
+      },
       file_types = ft,
     },
   },

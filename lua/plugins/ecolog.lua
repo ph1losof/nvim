@@ -3,6 +3,7 @@ return {
   keys = {
     { '<leader>ef', '<cmd>Ecolog files<cr>', desc = 'Ecolog toggle file module' },
     { '<leader>ev', '<cmd>Ecolog copy value<cr>', desc = 'Ecolog copy value' },
+    { '<leader>es', '<cmd>Ecolog files select<cr>', desc = 'Ecolog select active file' },
     { '<leader>ei', '<cmd>Ecolog interpolation<cr>', desc = 'Ecolog toggle interpolation' },
     { '<leader>el', '<cmd>Ecolog list<cr>', desc = 'Ecolog list variables' },
     { '<leader>ge', '<cmd>Ecolog files open_active<cr>', desc = 'Go to active ecolog file' },

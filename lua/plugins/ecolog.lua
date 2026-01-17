@@ -43,6 +43,12 @@ return {
           return a.name < b.name
         end,
         lsp = {
+          sources = {
+            defaults = {
+              shell = false,
+              file = true,
+            },
+          },
           init_options = {
             interpolation = {
               enabled = false,

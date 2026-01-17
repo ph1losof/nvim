@@ -75,6 +75,36 @@ return {
     },
     config = function(_, opts)
       require('nvim-treesitter.install').prefer_git = true
+
+      -- Register custom edf parser for .env files
+      local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+      parser_config.edf = {
+        install_info = {
+          url = 'https://github.com/ph1losof/tree-sitter-edf',
+          files = { 'src/parser.c', 'src/scanner.c' },
+          branch = 'main',
+        },
+        filetype = 'edf',
+      }
+
+      -- Auto-install edf highlight queries if missing
+      local queries_dir = vim.fn.stdpath('config') .. '/queries/edf'
+      local highlights_file = queries_dir .. '/highlights.scm'
+      if vim.fn.filereadable(highlights_file) == 0 then
+        vim.fn.mkdir(queries_dir, 'p')
+        vim.fn.jobstart({
+          'curl', '-sL',
+          'https://raw.githubusercontent.com/ph1losof/tree-sitter-edf/main/queries/highlights.scm',
+          '-o', highlights_file,
+        }, {
+          on_exit = function(_, code)
+            if code == 0 then
+              vim.notify('edf highlight queries installed', vim.log.levels.INFO)
+            end
+          end,
+        })
+      end
+
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup(opts)
     end,

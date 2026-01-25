@@ -58,6 +58,10 @@ return {
         group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
         callback = function(event)
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+          --[[ if client and client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+          end ]]
+
           if client and client.server_capabilities.documentHighlightProvider then
             local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -240,12 +244,6 @@ return {
 
       vim.lsp.config('*', {
         capabilities = capabilities,
-      })
-
-      vim.lsp.config('ecolog_lsp', {
-        cmd = { '/Users/tentacles/Projects/ecolog/target/release/ecolog-lsp' },
-        filetypes = { 'javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'python', 'rust', 'go', 'ruby', 'php', 'lua', 'sh' },
-        root_markers = { '.ecolog.toml', 'package.json', 'Cargo.toml', '.git' },
       })
 
       for server_name, config in pairs(servers) do

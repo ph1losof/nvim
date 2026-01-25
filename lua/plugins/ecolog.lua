@@ -1,10 +1,12 @@
 return {
   {
-    'ph1losof/ecolog.nvim',
-    branch = 'beta',
+    'ph1losof/ecolog2.nvim',
+    build = 'cargo install ecolog-lsp',
     keys = {
       { '<leader>ef', '<cmd>Ecolog files<cr>', desc = 'Ecolog toggle file module' },
       { '<leader>ev', '<cmd>Ecolog copy value<cr>', desc = 'Ecolog copy value' },
+      { '<leader>ege', '<cmd>Ecolog generate .env.example<cr>', desc = 'Ecolog generate .env.example' },
+      { '<leader>eg', '<cmd>Ecolog generate<cr>', desc = 'Ecolog generate' },
       { '<leader>es', '<cmd>Ecolog files select<cr>', desc = 'Ecolog select active file' },
       { '<leader>ei', '<cmd>Ecolog interpolation<cr>', desc = 'Ecolog toggle interpolation' },
       { '<leader>el', '<cmd>Ecolog list<cr>', desc = 'Ecolog list variables' },

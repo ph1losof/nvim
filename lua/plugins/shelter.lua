@@ -1,3 +1,4 @@
+os.getenv 'DOPPLER_ENVIRONMENT'
 return {
   'ph1losof/shelter.nvim',
   lazy = false,

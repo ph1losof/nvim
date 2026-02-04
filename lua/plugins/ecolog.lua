@@ -1,10 +1,15 @@
 return {
   {
     'ph1losof/ecolog2.nvim',
-    build = 'cargo install ecolog-lsp',
+    build = [[
+      cargo install ecolog-lsp && \
+      cargo install ecolog-provider-doppler --root ~/.local/share/ecolog/providers
+    ]],
     keys = {
       { '<leader>ef', '<cmd>Ecolog files<cr>', desc = 'Ecolog toggle file module' },
       { '<leader>ev', '<cmd>Ecolog copy value<cr>', desc = 'Ecolog copy value' },
+      { '<leader>er', '<cmd>Ecolog remote<cr>', desc = 'Ecolog toggle remote source' },
+      { '<leader>ers', '<cmd>Ecolog remote setup<cr>', desc = 'Ecolog remote setup' },
       { '<leader>ege', '<cmd>Ecolog generate .env.example<cr>', desc = 'Ecolog generate .env.example' },
       { '<leader>eg', '<cmd>Ecolog generate<cr>', desc = 'Ecolog generate' },
       { '<leader>es', '<cmd>Ecolog files select<cr>', desc = 'Ecolog select active file' },
@@ -32,19 +37,33 @@ return {
           },
         },
         sort_var_fn = function(a, b)
-          local a_is_shell = a.source == 'System Environment'
-          local b_is_shell = b.source == 'System Environment'
-
-          if a_is_shell and not b_is_shell then
-            return false
+          local function get_source_priority(var)
+            local source = var.source or ''
+            if source == 'System Environment' then
+              return 3
+            elseif source:match '^Remote' then
+              return 2
+            else
+              return 1
+            end
           end
-          if not a_is_shell and b_is_shell then
-            return true
+
+          local a_priority = get_source_priority(a)
+          local b_priority = get_source_priority(b)
+
+          if a_priority ~= b_priority then
+            return a_priority < b_priority
           end
 
           return a.name < b.name
         end,
         lsp = {
+          providers = {
+            path = vim.fn.expand '~/.local/share/ecolog/providers',
+            doppler = {
+              enabled = true,
+            },
+          },
           sources = {
             defaults = {
               shell = false,

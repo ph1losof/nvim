@@ -1,10 +1,7 @@
 return {
   {
     'ph1losof/ecolog2.nvim',
-    build = [[
-      cargo install ecolog-lsp && \
-      cargo install ecolog-provider-doppler --root ~/.local/share/ecolog/providers
-    ]],
+    build = 'cargo install ecolog-lsp',
     keys = {
       { '<leader>ef', '<cmd>Ecolog files<cr>', desc = 'Ecolog toggle file module' },
       { '<leader>ev', '<cmd>Ecolog copy value<cr>', desc = 'Ecolog copy value' },
@@ -58,12 +55,6 @@ return {
           return a.name < b.name
         end,
         lsp = {
-          providers = {
-            path = vim.fn.expand '~/.local/share/ecolog/providers',
-            doppler = {
-              enabled = true,
-            },
-          },
           sources = {
             defaults = {
               shell = false,

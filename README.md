@@ -31,7 +31,7 @@ I actively keep it up to date with modern approaches, plugins, and ecosystem cha
 - **10+ linters** running via nvim-lint
 - **Modern completion** via blink.cmp with AI and LSP sources
 - **Sensitive data masking** with shelter.nvim
-- **Environment variable management** with ecolog2.nvim (including Doppler remote sources)
+- **Environment variable management** with ecolog2.nvim
 - **REST client** via kulala.nvim
 - **Database interface** via vim-dadbod
 

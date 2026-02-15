@@ -71,6 +71,9 @@ vim.opt.wildignore:append { '*/node_modules/*,*/.history/*' }
 -- disable wrapping by default
 vim.opt.wrap = false
 
+-- session options (avoids blank buffers and stale options on restore)
+vim.opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'folds', 'globals', 'help' }
+
 -- indentation settings
 vim.opt.autoindent = true
 vim.opt.smartindent = true
@@ -121,15 +124,6 @@ vim.diagnostic.config {
   virtual_text = {
     source = 'if_many',
     spacing = 2,
-    format = function(diagnostic)
-      local diagnostic_message = {
-        [vim.diagnostic.severity.ERROR] = diagnostic.message,
-        [vim.diagnostic.severity.WARN] = diagnostic.message,
-        [vim.diagnostic.severity.INFO] = diagnostic.message,
-        [vim.diagnostic.severity.HINT] = diagnostic.message,
-      }
-      return diagnostic_message[diagnostic.severity]
-    end,
   },
 }
 

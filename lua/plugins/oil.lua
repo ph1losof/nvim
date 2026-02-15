@@ -81,6 +81,8 @@ local function should_skip_oil()
 end
 -- stylua: ignore end
 
+local skip_oil = should_skip_oil()
+
 -- NOTE: adds support for snacks rename feature in oil.nvim
 vim.api.nvim_create_autocmd('User', {
   pattern = 'OilActionsPost',
@@ -103,7 +105,7 @@ return {
     },
     init = function()
       -- PERF: Pre-check and hide UI elements before plugin loads
-      if not should_skip_oil() then
+      if not skip_oil then
         -- Cache original values
         local showtabline = vim.o.showtabline
         local laststatus = vim.o.laststatus
@@ -143,7 +145,7 @@ return {
         },
       }
 
-      if not should_skip_oil() then
+      if not skip_oil then
         require('oil').open()
       end
     end,

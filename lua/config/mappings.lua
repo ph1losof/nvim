@@ -17,8 +17,8 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- splits
-vim.keymap.set('n', '<leader>sv', ':vsp<CR>', { desc = 'toggle vertical split', remap = true })
-vim.keymap.set('n', '<leader>sh', ':sp<CR>', { desc = 'toggle horizontal split', remap = true })
+vim.keymap.set('n', '<leader>sv', ':vsp<CR>', { desc = 'Create vertical split', remap = true })
+vim.keymap.set('n', '<leader>sh', ':sp<CR>', { desc = 'Create horizontal split', remap = true })
 
 -- insert mode mappings for moving around
 vim.keymap.set('i', '<C-b>', '<ESC>^i', { desc = 'move beginning of line' })
@@ -53,8 +53,10 @@ end)
 -- Press 'U' for redo
 vim.keymap.set('n', 'U', '<C-r>')
 
--- Press gx to open the link under the cursor
-vim.keymap.set('n', 'gx', ':sil !open <cWORD><cr>', { silent = true })
+-- Press gx to open the link under the cursor (cross-platform via vim.ui.open)
+vim.keymap.set('n', 'gx', function()
+  vim.ui.open(vim.fn.expand '<cfile>')
+end, { silent = true, desc = 'Open link under cursor' })
 
 -- Always use very magic mode for searching
 vim.keymap.set('n', '/', [[/\v]])

@@ -124,7 +124,13 @@ return {
         },
         tailwindcss = {
           root_dir = function(bufnr, on_dir)
-            local root = vim.fs.root(bufnr, { 'tailwind.config.cjs', 'tailwind.config.ts', 'tailwind.config.mjs', 'tailwind.config.js', 'postcss.config.js' })
+            local root = vim.fs.root(bufnr, {
+              'tailwind.config.cjs',
+              'tailwind.config.ts',
+              'tailwind.config.mjs',
+              'tailwind.config.js',
+              'postcss.config.js',
+            })
             if root then
               on_dir(root)
             end

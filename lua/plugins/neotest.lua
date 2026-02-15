@@ -42,7 +42,6 @@ return {
       opts.consumers = opts.consumers or {}
 
       -- Refresh and auto close trouble after running tests
-      ---@type neotest.Consumer
       opts.consumers.trouble = function(client)
         client.listeners.results = function(adapter_id, results, partial)
           if partial then
@@ -109,10 +108,14 @@ return {
     { "<leader>tfn", function() require("neotest").run.run() end, desc = "Run Nearest (Neotest)" },
     { "<leader>tfl", function() require("neotest").run.run_last() end, desc = "Run Last (Neotest)" },
     { "<leader>tfs", function() require("neotest").summary.toggle() end, desc = "Toggle Summary (Neotest)" },
-    { "<leader>tfo", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Output (Neotest)" },
+    { "<leader>tfo", function()
+      require("neotest").output.open({ enter = true, auto_close = true })
+    end, desc = "Show Output (Neotest)" },
     { "<leader>tfO", function() require("neotest").output_panel.toggle() end, desc = "Toggle Output Panel (Neotest)" },
     { "<leader>tfS", function() require("neotest").run.stop() end, desc = "Stop (Neotest)" },
-    { "<leader>tfw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, desc = "Toggle Watch (Neotest)" },
+    { "<leader>tfw", function()
+      require("neotest").watch.toggle(vim.fn.expand("%"))
+    end, desc = "Toggle Watch (Neotest)" },
   },
   },
 }

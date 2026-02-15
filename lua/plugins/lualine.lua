@@ -15,7 +15,7 @@ local oil_extension = {
       function()
         local ok, oil = pcall(require, 'oil')
         if ok and oil and oil.get_current_dir then
-          return vim.fn.fnamemodify(oil.get_current_dir(), ':~')
+          return vim.fn.fnamemodify(oil.get_current_dir() or '', ':~')
         else
           return ''
         end

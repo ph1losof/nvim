@@ -29,6 +29,7 @@ return {
       { 'gb', mode = 'x', desc = 'Comment toggle blockwise (visual)' },
     },
     config = function()
+      ---@diagnostic disable-next-line: missing-fields
       require('Comment').setup {
         pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
       }
@@ -110,7 +111,7 @@ return {
       {
         '<leader>ft',
         function()
-          Snacks.picker.todo_comments()
+          Snacks.picker.todo_comments() ---@diagnostic disable-line: undefined-field
         end,
         desc = 'Todo',
       },

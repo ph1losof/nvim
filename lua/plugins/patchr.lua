@@ -6,7 +6,7 @@
 return {
   ---@module "patchr"
   'nhu/patchr.nvim',
-  opts = function(self, opts)
+  opts = function(_self, _opts)
     local cmd = require 'patchr.cmd'
     local config = require 'patchr.config'
 

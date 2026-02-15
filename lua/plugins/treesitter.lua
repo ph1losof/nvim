@@ -36,8 +36,9 @@ return {
       vim.api.nvim_create_autocmd('User', {
         pattern = 'TSUpdate',
         callback = function()
-          ---@diagnostic disable-next-line: inject-field
+          ---@diagnostic disable-next-line: inject-field, missing-fields
           require('nvim-treesitter.parsers').edf = {
+            ---@diagnostic disable-next-line: missing-fields
             install_info = {
               url = 'https://github.com/ph1losof/tree-sitter-edf',
               branch = 'main',

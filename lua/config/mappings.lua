@@ -1,7 +1,3 @@
--- Set highlight on search, but clear on switching to normal mode
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.keymap.set('n', '<C-[', '<cmd>nohlsearch<CR>')
-
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show [D]iagnostic messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -38,6 +34,7 @@ vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
 
 -- clear highlights on escape
 vim.keymap.set('n', '<Esc>', '<cmd>noh<CR>', { desc = 'General Clear highlights' })
+vim.keymap.set('n', '<C-[>', '<cmd>noh<CR>', { desc = 'General Clear highlights' })
 
 -- comments
 vim.keymap.set({ 'n' }, '<leader>/', 'gcc', { desc = 'Toggle Comment', remap = true })

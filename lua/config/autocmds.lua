@@ -19,7 +19,10 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- disable auto adding comments for new line
-vim.api.nvim_create_autocmd('BufEnter', { command = [[set formatoptions-=cro]] })
+vim.api.nvim_create_autocmd('BufEnter', {
+  group = vim.api.nvim_create_augroup('disable_auto_comment', { clear = true }),
+  command = [[set formatoptions-=cro]],
+})
 
 -- Automatically reload the file if it is changed outside of Nvim, see https://unix.stackexchange.com/a/383044/221410.
 -- It seems that `checktime` does not work in command line. We need to check if we are in command

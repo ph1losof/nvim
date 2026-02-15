@@ -4,14 +4,15 @@ return {
     dependencies = {
       {
         'mason-org/mason.nvim',
-        ui = {
-          icons = {
-            package_installed = '✓',
-            package_pending = '➜',
-            package_uninstalled = '✗',
+        opts = {
+          ui = {
+            icons = {
+              package_installed = '✓',
+              package_pending = '➜',
+              package_uninstalled = '✗',
+            },
           },
         },
-        config = true,
       }, -- NOTE: Must be loaded before dependants
       { 'mason-org/mason-lspconfig.nvim' },
       -- NOTE: installing not using mason solves https://github.com/nanotee/sqls.nvim/issues/23
@@ -167,8 +168,6 @@ return {
         dotls = {},
       }
 
-      require('mason').setup()
-
       local ensure_installed = {}
       vim.list_extend(ensure_installed, {
         -- Lua
@@ -191,6 +190,7 @@ return {
         -- Rust
         'rust-analyzer',
         'rustfmt',
+        'taplo',
 
         -- File Formats
         'json-lsp',

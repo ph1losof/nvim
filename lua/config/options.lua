@@ -57,8 +57,6 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
-vim.opt.formatoptions:append { 'r' }
-
 vim.opt.backspace = 'start,eol,indent'
 vim.opt.path:append { '**' }
 

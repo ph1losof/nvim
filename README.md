@@ -12,13 +12,14 @@ This is more accurate than `nvim --startuptime`.
 
 ## Introduction
 
-This is my personal Neovim configuration that I use for day-to-day development.
-Since I'm actively using it, it is in my very own interest to maintain and fix any issues that arise.
+Most Neovim configurations pretend like they are being used to get actual work done. This one is.
 
-It contains a lot of "hacks" and little-known tricks I've accumulated over the years to make the experience better when working with certain plugins.
+This is the Neovim configuration I use daily in large production codebases.
+Every plugin, keymap, and option earns its place through real usage - if something breaks or slows me down, it gets fixed or removed. All plugins are actively used and I keep it as minimal as possible, but I never compromise on developer experience - if there's a better path, I always take it.
 
-I've gone over numerous Neovim configs and combined the best autocommands, keymaps, and options that work for me.
-Even though it is opinionated, it strikes a good balance between being ready to use now and providing good defaults as a starting point for your own configuration.
+It contains a lot of "hacks" and little known tricks I've accumulated over the years to make overral experience better, which you won't find in any other dotfiles - all of this comes from battle-testing plugins in real projects and digging through countless GitHub issues to find solutions that actually work.
+
+I actively keep it up to date with modern approaches, plugins, and ecosystem changes. Even though it is opinionated, it strikes a good balance between being ready to use now and providing good defaults as a starting point for your own configuration.
 
 ### Highlights
 

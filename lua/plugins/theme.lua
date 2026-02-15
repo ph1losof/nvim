@@ -1,6 +1,7 @@
 return {
   {
-    dir = '~/Projects/morta.nvim',
+    'ph1losof/morta.nvim',
+    branch = '2.0',
     name = 'morta',
     priority = 1000,
     opts = {},

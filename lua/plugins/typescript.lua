@@ -22,6 +22,12 @@ return {
 
       require('typescript-tools').setup {
         capabilities = capabilities,
+        root_dir = function(fname)
+          if lsputil.root_pattern('deno.json', 'deno.jsonc')(fname) then
+            return nil
+          end
+          return lsputil.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git')(fname)
+        end,
         handlers = {
           -- NOTE: eslint handles 6133, 1109, 6192, 6196 (unused vars, imports, declarations)
           ['textDocument/publishDiagnostics'] = api.filter_diagnostics { 80006, 6133, 1109, 6192, 6196 },
@@ -45,6 +51,8 @@ return {
           'typescript',
           'typescriptreact',
           'typescript.tsx',
+          'javascript',
+          'javascriptreact',
         },
       }
     end,

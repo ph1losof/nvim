@@ -6,7 +6,17 @@ return {
       local lint = require 'lint'
       local helpers = require 'helpers'
       lint.linters_by_ft = {
-        markdown = { 'markdownlint' },
+        lua = { 'luacheck' },
+        python = { 'pylint' },
+        sh = { 'shellcheck' },
+        bash = { 'shellcheck' },
+        yaml = { 'yamllint' },
+        json = { 'jsonlint' },
+        jsonc = { 'jsonlint' },
+        gitcommit = { 'commitlint' },
+        sql = { 'sqlfluff' },
+        markdown = { 'markdownlint', 'vale' },
+        ['markdown.mdx'] = { 'markdownlint' },
       }
       local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
       vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {

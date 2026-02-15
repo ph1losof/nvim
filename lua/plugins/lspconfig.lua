@@ -21,17 +21,6 @@ return {
         dependencies = {
           'mason-org/mason.nvim',
         },
-        opts = {
-          ensure_installed = {
-            'prettier',
-            'ruff',
-            'stylua',
-            'isort',
-            'black',
-            'pylint',
-            'eslint_d',
-          },
-        },
       },
       { 'j-hui/fidget.nvim', opts = {
         notification = {
@@ -96,7 +85,14 @@ return {
         astro = {},
         pyright = {
           settings = {
-            analysis = { typeCheckingMode = 'strict', autoImportCompletions = true, autoSearchPaths = true, useLibraryCodeForTypes = true },
+            python = {
+              analysis = {
+                typeCheckingMode = 'strict',
+                autoImportCompletions = true,
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+              },
+            },
           },
         },
         ruff = {
@@ -126,8 +122,6 @@ return {
           },
         },
         tailwindcss = {
-          hovers = true,
-          suggestions = true,
           root_dir = function(bufnr, on_dir)
             local root = vim.fs.root(bufnr, { 'tailwind.config.cjs', 'tailwind.config.ts', 'tailwind.config.mjs', 'tailwind.config.js', 'postcss.config.js' })
             if root then
@@ -136,27 +130,21 @@ return {
           end,
         },
         marksman = {
-          -- NOTE: This solves the problem of Marksman exiting when a new hover doc buffer (from Lspsaga) is created credits to FlawlessCasual17
-          ---@param bufnr number
-          autostart = function(bufnr)
+          -- NOTE: This solves the problem of Marksman exiting when a new hover doc buffer (from Lspsaga) is created
+          root_dir = function(bufnr, on_dir)
             if helpers.is_lspsaga_peek_window(bufnr) then
-              return false
+              return
             end
-            return true
-          end,
-          ---@param bufnr number
-          enable = function(bufnr)
-            if helpers.is_lspsaga_peek_window(bufnr) then
-              return false
+            local root = vim.fs.root(bufnr, { '.marksman.toml', '.git' })
+            if root then
+              on_dir(root)
             end
-            return true
           end,
         },
         sqls = {},
         rust_analyzer = {
-          file_types = { 'rust' },
           root_dir = function(bufnr, on_dir)
-            local root = vim.fs.root(bufnr, { 'Cargo.toml', 'Makefile' })
+            local root = vim.fs.root(bufnr, { 'Cargo.toml', 'rust-project.json' })
             if root then
               on_dir(root)
             end
@@ -171,6 +159,12 @@ return {
             },
           },
         },
+        prismals = {},
+        jsonls = {},
+        yamlls = {},
+        volar = {},
+        dockerls = {},
+        dotls = {},
       }
 
       require('mason').setup()
@@ -185,6 +179,10 @@ return {
 
         -- Python
         'pyright',
+        'ruff',
+        'isort',
+        'black',
+        'pylint',
 
         -- SQL
         'sqlfluff',
@@ -225,6 +223,7 @@ return {
         -- Others
         'tailwindcss-language-server',
         'css-lsp',
+        'prettier',
         'prettierd',
         'vue-language-server',
         'eslint_d',
@@ -247,9 +246,7 @@ return {
       })
 
       for server_name, config in pairs(servers) do
-        local server_config = vim.tbl_deep_extend('force', {}, config)
-        server_config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, config.capabilities or {})
-        vim.lsp.config(server_name, server_config)
+        vim.lsp.config(server_name, config)
       end
 
       require('mason-lspconfig').setup {

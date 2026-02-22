@@ -16,6 +16,7 @@ return {
       { '<leader>eh', '<cmd>Ecolog shell<cr>', desc = 'Ecolog toggle shell module' },
     },
     config = function()
+      require('lazy').load { plugins = { 'nvim-lspconfig' } }
       require('ecolog').setup {
         vim_env = true,
         statusline = {

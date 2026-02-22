@@ -33,4 +33,12 @@ require('lazy').setup('plugins', {
       lazy = '💤 ',
     },
   },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        'netrwPlugin',
+        'tutor',
+      },
+    },
+  },
 })

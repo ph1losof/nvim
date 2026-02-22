@@ -93,12 +93,23 @@ vim.cmd [[let &t_Ce = "\e[4:0m"]]
 vim.opt.listchars = { tab = '  ', trail = '·', extends = '»', precedes = '«', nbsp = '░' }
 vim.opt.list = true
 
+-- removes ~ at the end of buffer
+vim.opt.fillchars = { eob = ' ' }
+
+-- disable nvim intro
+vim.opt.shortmess:append 'sI'
+
+-- go to previous/next line with h,l
+-- when cursor reaches end/beginning of line
+vim.opt.whichwrap:append '<>[]hl'
+
 -- views can only be fully collapsed with the global statusline
 vim.opt.laststatus = 3
 
 -- enable colorcolumn
 vim.opt.colorcolumn = '80'
 
+-- register filetypes for logs and ecolog
 vim.filetype.add {
   pattern = {
     ['%.env'] = 'edf',

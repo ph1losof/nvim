@@ -10,6 +10,10 @@ return {
   {
     'MeanderingProgrammer/treesitter-modules.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    keys = {
+      { '<leader><tab>', desc = 'Init/increment treesitter selection' },
+      { '<bs>', desc = 'Decrement treesitter selection', mode = 'x' },
+    },
     opts = {
       incremental_selection = {
         enable = true,

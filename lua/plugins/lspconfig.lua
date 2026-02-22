@@ -1,6 +1,7 @@
 return {
   {
     'neovim/nvim-lspconfig',
+    event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       {
         'mason-org/mason.nvim',
@@ -13,7 +14,8 @@ return {
             },
           },
         },
-      }, -- NOTE: Must be loaded before dependants
+      },
+      -- NOTE: Must be loaded before dependants
       { 'mason-org/mason-lspconfig.nvim' },
       -- NOTE: installing not using mason solves https://github.com/nanotee/sqls.nvim/issues/23
       { 'nanotee/sqls.nvim' },

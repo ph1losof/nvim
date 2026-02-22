@@ -1,6 +1,7 @@
 return {
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
+    lazy = true,
     config = function()
       require('ts_context_commentstring').setup {
         enable_autocmd = false,
@@ -19,6 +20,7 @@ return {
   },
   {
     'numToStr/Comment.nvim',
+    event = 'VeryLazy',
     dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
     keys = {
       { 'gcc', mode = 'n', desc = 'Comment toggle current line' },

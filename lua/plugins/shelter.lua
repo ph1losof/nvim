@@ -9,10 +9,11 @@ return {
     skip_comments = false,
     modules = {
       ecolog = {
-        cmp = true, -- Mask completion
-        peek = false, -- Mask hover
+        cmp = true,
+        peek = false,
         picker = false,
       },
+      oil_previewer = true,
       files = true,
       snacks_previewer = true,
     },

@@ -1,7 +1,7 @@
 return {
   {
     'pmizio/typescript-tools.nvim',
-    ft = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact' },
+    ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'neovim/nvim-lspconfig',
@@ -15,18 +15,21 @@ return {
     },
     config = function()
       local api = require 'typescript-tools.api'
-      local lsputil = require 'lspconfig.util'
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
 
       require('typescript-tools').setup {
         capabilities = capabilities,
-        root_dir = function(fname)
-          if lsputil.root_pattern('deno.json', 'deno.jsonc')(fname) then
-            return nil
+        root_dir = function(bufnr, on_dir)
+          -- Don't attach in Deno projects
+          if vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' }) then
+            return
           end
-          return lsputil.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git')(fname)
+          local root = vim.fs.root(bufnr, { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' })
+          if root then
+            on_dir(root)
+          end
         end,
         handlers = {
           -- NOTE: eslint handles 6133, 1109, 6192, 6196 (unused vars, imports, declarations)
@@ -51,7 +54,6 @@ return {
         filetypes = {
           'typescript',
           'typescriptreact',
-          'typescript.tsx',
           'javascript',
           'javascriptreact',
         },

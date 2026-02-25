@@ -99,8 +99,8 @@ return {
                 return true
               end
 
-              return not vim.tbl_contains({ 'oil', 'sagarename', 'opencode_ask' }, vim.bo.filetype)
-                and not vim.api.nvim_buf_get_name(0):match '^kulala://'
+              -- NOTE: disable codeium errors in these buffers
+              return not vim.tbl_contains({ 'oil', 'sagarename', 'opencode_ask' }, vim.bo.filetype) and not vim.api.nvim_buf_get_name(0):match '^kulala://'
             end,
             score_offset = 98,
             transform_items = function(_, items)

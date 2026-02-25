@@ -25,7 +25,7 @@ I actively keep it up to date with modern approaches, plugins, and ecosystem cha
 
 - **67+ plugins** organized across 38 separate plugin files
 - **20 language servers** configured with smart root detection and conditional attachment
-- **AI-augmented development** via Claude Code and Codeium integration
+- **AI-augmented development** via Codeium integration (I use claude-code via tmux)
 - **Custom tree-sitter parser** (`edf`) for `.env` file syntax highlighting
 - **Format on save** with conform.nvim (prettier, stylua, ruff, rustfmt, and more)
 - **10+ linters** running via nvim-lint

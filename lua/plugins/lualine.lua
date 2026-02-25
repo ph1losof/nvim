@@ -8,7 +8,8 @@ local harpoon_section = {
   no_harpoon = 'Harpoon not loaded',
 }
 
--- instead of using default oil extension we use custom to include harpoon line for easier navigation when opening oil
+-- NOTE: instead of using default oil extension we use custom to include
+-- harpoon line for easier navigation when opening oil
 local oil_extension = {
   sections = {
     lualine_a = {

@@ -1,3 +1,4 @@
+-- NOTE: sets shiftwidth for DBUI buffers
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'dbui',
   callback = function()

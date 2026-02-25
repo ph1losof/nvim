@@ -1,4 +1,4 @@
--- credits to https://github.com/k0ch4nx for the solution
+-- NOTE: credits to https://github.com/k0ch4nx for the solution
 -- for handling LazySync and LazyCheck events
 
 ---@module "lazy"

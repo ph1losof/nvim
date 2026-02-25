@@ -9,7 +9,7 @@ return {
     opts = {
       document_color = { enabled = false },
       server = {
-        override = false, -- Disable auto-setup since we configure tailwindcss LSP manually
+        override = false, -- NOTE: Disable auto-setup since we configure tailwindcss LSP manually
       },
     },
   },

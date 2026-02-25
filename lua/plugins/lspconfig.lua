@@ -3,28 +3,8 @@ return {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
-      {
-        'mason-org/mason.nvim',
-        opts = {
-          ui = {
-            icons = {
-              package_installed = '✓',
-              package_pending = '➜',
-              package_uninstalled = '✗',
-            },
-          },
-        },
-      },
-      -- NOTE: Must be loaded before dependants
-      { 'mason-org/mason-lspconfig.nvim' },
       -- NOTE: installing not using mason solves https://github.com/nanotee/sqls.nvim/issues/23
       { 'nanotee/sqls.nvim' },
-      {
-        'WhoIsSethDaniel/mason-tool-installer.nvim',
-        dependencies = {
-          'mason-org/mason.nvim',
-        },
-      },
       { 'j-hui/fidget.nvim', opts = {
         notification = {
           window = {
@@ -165,6 +145,14 @@ return {
             },
           },
         },
+        biome = {
+          root_dir = function(bufnr, on_dir)
+            local root = vim.fs.root(bufnr, { 'biome.json', 'biome.jsonc' })
+            if root then
+              on_dir(root)
+            end
+          end,
+        },
         prismals = {},
         jsonls = {},
         yamlls = {},
@@ -173,79 +161,6 @@ return {
         dotls = {},
       }
 
-      local ensure_installed = {}
-      vim.list_extend(ensure_installed, {
-        -- Lua
-        'lua-language-server',
-        'prisma-language-server',
-        'luacheck',
-        'stylua',
-
-        -- Python
-        'pyright',
-        'ruff',
-        'isort',
-        'black',
-        'pylint',
-
-        -- SQL
-        'sqlfluff',
-        'sql-formatter',
-
-        -- Rust
-        'rust-analyzer',
-        'rustfmt',
-        'taplo',
-
-        -- File Formats
-        'json-lsp',
-        'jsonlint',
-        'jq',
-        'yaml-language-server',
-        'yamllint',
-        'yamlfmt',
-
-        -- Git
-        'commitlint',
-        'gitlint',
-
-        -- Writing
-        'marksman',
-        'markdownlint',
-        'vale',
-        'write-good',
-        'cspell',
-        'misspell',
-        'proselint',
-
-        -- Shell
-        'bash-language-server',
-        'beautysh',
-        'shfmt',
-        'shellcheck',
-        'shellharden',
-
-        -- Others
-        'tailwindcss-language-server',
-        'css-lsp',
-        'prettier',
-        'prettierd',
-        'vue-language-server',
-        'eslint_d',
-        'codespell',
-        'dockerfile-language-server',
-        'dot-language-server',
-        'editorconfig-checker',
-        'html-lsp',
-        'astro-language-server',
-        'deno',
-      })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-      vim.api.nvim_create_user_command('MasonInstallAll', function()
-        vim.cmd('MasonInstall ' .. table.concat(ensure_installed, ' '))
-      end, {})
-
       vim.lsp.config('*', {
         capabilities = capabilities,
       })
@@ -253,10 +168,6 @@ return {
       for server_name, config in pairs(servers) do
         vim.lsp.config(server_name, config)
       end
-
-      require('mason-lspconfig').setup {
-        ensure_installed = {},
-      }
 
       local server_names = vim.tbl_keys(servers)
       vim.lsp.enable(server_names)

@@ -23,11 +23,11 @@ I actively keep it up to date with modern approaches, plugins, and ecosystem cha
 
 ### Highlights
 
-- **67 plugins** organized across 37 separate plugin files
+- **67 plugins** organized across 38 separate plugin files
 - **20 language servers** configured with smart root detection and conditional attachment
 - **AI-augmented development** via Codeium integration (I use claude-code via tmux)
 - **Custom tree-sitter parser** (`edf`) for `.env` file syntax highlighting
-- **Format on save** with conform.nvim (prettier, stylua, ruff, rustfmt, and more)
+- **Format on save** with conform.nvim (prettier, biome, stylua, ruff, rustfmt, and more)
 - **10+ linters** running via nvim-lint
 - **Modern completion** via blink.cmp with AI and LSP sources
 - **Sensitive data masking** with shelter.nvim
@@ -97,52 +97,52 @@ Leader key is `Space`. Here are the most important mappings — run `:map` or ch
 
 ### Navigation & Search
 
-| Key | Description |
-|-----|-------------|
-| `<leader>ff` | Find files |
-| `<leader>fw` | Live grep |
-| `<leader><space>` | Find open buffers |
-| `<leader>fr` | Resume last search |
-| `<leader>fh` | Help pages |
-| `<C-n>` | Open file explorer (Oil) |
+| Key               | Description              |
+| ----------------- | ------------------------ |
+| `<leader>ff`      | Find files               |
+| `<leader>fw`      | Live grep                |
+| `<leader><space>` | Find open buffers        |
+| `<leader>fr`      | Resume last search       |
+| `<leader>fh`      | Help pages               |
+| `<C-n>`           | Open file explorer (Oil) |
 | `<leader>h1`–`h4` | Jump to Harpoon mark 1–4 |
-| `<leader>ha` | Add buffer to Harpoon |
+| `<leader>ha`      | Add buffer to Harpoon    |
 
 ### LSP & Code
 
-| Key | Description |
-|-----|-------------|
-| `K` | Hover documentation |
-| `<leader>gd` | Go to definition |
-| `<leader>gr` | Find references |
+| Key          | Description          |
+| ------------ | -------------------- |
+| `K`          | Hover documentation  |
+| `<leader>gd` | Go to definition     |
+| `<leader>gr` | Find references      |
 | `<leader>gI` | Go to implementation |
-| `<leader>gp` | Peek definition |
-| `<leader>rn` | Rename symbol |
-| `<leader>ca` | Code action |
-| `<leader>ol` | Toggle outline |
+| `<leader>gp` | Peek definition      |
+| `<leader>rn` | Rename symbol        |
+| `<leader>ca` | Code action          |
+| `<leader>ol` | Toggle outline       |
 
 ### Git
 
-| Key | Description |
-|-----|-------------|
-| `<leader>lg` | Open Lazygit |
+| Key          | Description                  |
+| ------------ | ---------------------------- |
+| `<leader>lg` | Open Lazygit                 |
 | `<leader>lf` | Lazygit current file history |
-| `<leader>hs` | Stage hunk |
-| `<leader>hp` | Preview hunk |
-| `<leader>hb` | Git blame line |
-| `]c` / `[c` | Next / previous git change |
+| `<leader>hs` | Stage hunk                   |
+| `<leader>hp` | Preview hunk                 |
+| `<leader>hb` | Git blame line               |
+| `]c` / `[c`  | Next / previous git change   |
 
 ### Editing & UI
 
-| Key | Description |
-|-----|-------------|
-| `<leader>/` | Toggle comment |
-| `<leader>sr` | Search & replace (grug-far) |
-| `<leader>z` | Zen mode |
-| `<leader>u` | Undotree |
-| `S` | Quick find/replace word under cursor |
-| `U` | Redo |
-| `+` / `-` | Increment / decrement number |
+| Key          | Description                          |
+| ------------ | ------------------------------------ |
+| `<leader>/`  | Toggle comment                       |
+| `<leader>sr` | Search & replace (grug-far)          |
+| `<leader>z`  | Zen mode                             |
+| `<leader>u`  | Undotree                             |
+| `S`          | Quick find/replace word under cursor |
+| `U`          | Redo                                 |
+| `+` / `-`    | Increment / decrement number         |
 
 ## Project Structure
 
@@ -166,7 +166,9 @@ Leader key is `Space`. Here are the most important mappings — run `:map` or ch
 
 When I initially started using Neovim, my starting point was [NvChad](https://nvchad.com/). That's why you may find keybindings similar to NvChad's.
 
-_This config has taken some good parts from [nvim-lua/kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) (huge thanks to them), but has since evolved into its own thing._
+_The initial transition from NvChad was done using [nvim-lua/kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) as a starting point. Over time I dropped most of it and rewrote everything from scratch, keeping only a few good parts from them. Huge thanks to kickstart for getting me started in non-distro direction._
+
+_A lot of good defaults, extras, and plugin choices in this config were inspired by [LazyVim](https://www.lazyvim.org/). Whenever I add a new plugin, I usually look up its source code in the [LazyVim repo](https://github.com/LazyVim/LazyVim) first — a great reference for well-thought-out Neovim defaults._
 
 ## License
 

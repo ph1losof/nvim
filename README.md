@@ -17,13 +17,13 @@ Most Neovim configurations pretend like they are being used to get actual work d
 This is the Neovim configuration I use daily in large production codebases.
 Every plugin, keymap, and option earns its place through real usage - if something breaks or slows me down, it gets fixed or removed. All plugins are actively used and I keep it as minimal as possible, but I never compromise on developer experience - if there's a better path, I always take it.
 
-It contains a lot of "hacks" and little known tricks I've accumulated over the years to make overral experience better, which you won't find in any other dotfiles - all of this comes from battle-testing plugins in real projects and digging through countless GitHub issues to find solutions that actually work.
+It contains a lot of "hacks" and little known tricks I've accumulated over the years to make overall experience better, which you won't find in any other dotfiles - all of this comes from battle-testing plugins in real projects and digging through countless GitHub issues to find solutions that actually work.
 
 I actively keep it up to date with modern approaches, plugins, and ecosystem changes. Even though it is opinionated, it strikes a good balance between being ready to use now and providing good defaults as a starting point for your own configuration.
 
 ### Highlights
 
-- **67+ plugins** organized across 38 separate plugin files
+- **67 plugins** organized across 37 separate plugin files
 - **20 language servers** configured with smart root detection and conditional attachment
 - **AI-augmented development** via Codeium integration (I use claude-code via tmux)
 - **Custom tree-sitter parser** (`edf`) for `.env` file syntax highlighting
@@ -79,7 +79,7 @@ TypeScript/JavaScript, React/Vue/Astro, Python, Rust, Lua, SQL, Bash, HTML/CSS/T
    nvim
    ```
 
-3. Install all LSP servers, formatters, and linters:
+3. Install all LSP servers, formatters, and linters (this is a custom command defined in this config, not a built-in Mason command):
 
    ```vim
    :MasonInstallAll
@@ -90,6 +90,59 @@ TypeScript/JavaScript, React/Vue/Astro, Python, Rust, Lua, SQL, Bash, HTML/CSS/T
    ```vim
    :TSUpdate
    ```
+
+## Key Bindings
+
+Leader key is `Space`. Here are the most important mappings — run `:map` or check `lua/config/mappings.lua` and individual plugin files for the full list.
+
+### Navigation & Search
+
+| Key | Description |
+|-----|-------------|
+| `<leader>ff` | Find files |
+| `<leader>fw` | Live grep |
+| `<leader><space>` | Find open buffers |
+| `<leader>fr` | Resume last search |
+| `<leader>fh` | Help pages |
+| `<C-n>` | Open file explorer (Oil) |
+| `<leader>h1`–`h4` | Jump to Harpoon mark 1–4 |
+| `<leader>ha` | Add buffer to Harpoon |
+
+### LSP & Code
+
+| Key | Description |
+|-----|-------------|
+| `K` | Hover documentation |
+| `<leader>gd` | Go to definition |
+| `<leader>gr` | Find references |
+| `<leader>gI` | Go to implementation |
+| `<leader>gp` | Peek definition |
+| `<leader>rn` | Rename symbol |
+| `<leader>ca` | Code action |
+| `<leader>ol` | Toggle outline |
+
+### Git
+
+| Key | Description |
+|-----|-------------|
+| `<leader>lg` | Open Lazygit |
+| `<leader>lf` | Lazygit current file history |
+| `<leader>hs` | Stage hunk |
+| `<leader>hp` | Preview hunk |
+| `<leader>hb` | Git blame line |
+| `]c` / `[c` | Next / previous git change |
+
+### Editing & UI
+
+| Key | Description |
+|-----|-------------|
+| `<leader>/` | Toggle comment |
+| `<leader>sr` | Search & replace (grug-far) |
+| `<leader>z` | Zen mode |
+| `<leader>u` | Undotree |
+| `S` | Quick find/replace word under cursor |
+| `U` | Redo |
+| `+` / `-` | Increment / decrement number |
 
 ## Project Structure
 
@@ -113,4 +166,8 @@ TypeScript/JavaScript, React/Vue/Astro, Python, Rust, Lua, SQL, Bash, HTML/CSS/T
 
 When I initially started using Neovim, my starting point was [NvChad](https://nvchad.com/). That's why you may find keybindings similar to NvChad's.
 
-_This is a fork of [nvim-lua/kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) that moves from a single file to a multi-file configuration (huge thanks to them)._
+_This config has taken some good parts from [nvim-lua/kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) (huge thanks to them), but has since evolved into its own thing._
+
+## License
+
+[MIT](LICENSE)

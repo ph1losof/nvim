@@ -112,3 +112,45 @@ vim.api.nvim_create_autocmd('VimResized', {
   desc = 'autoresize windows on resizing operation',
   command = 'wincmd =',
 })
+
+local function is_kulala_transient_buffer(buf)
+  local name = vim.api.nvim_buf_get_name(buf)
+  local filetype = vim.bo[buf].filetype
+
+  return name:match '^kulala://' or filetype:match '%.kulala_ui$'
+end
+
+-- Kulala buffers are ephemeral UI/scratchpad buffers.
+-- Keep them disposable and never "modified" so all navigation tools can switch away cleanly.
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufModifiedSet' }, {
+  group = vim.api.nvim_create_augroup('kulala_transient_buffers', { clear = true }),
+  pattern = '*',
+  callback = function(event)
+    if not is_kulala_transient_buffer(event.buf) then
+      return
+    end
+
+    vim.bo[event.buf].bufhidden = 'wipe'
+    vim.bo[event.buf].swapfile = false
+
+    if vim.bo[event.buf].modified then
+      vim.bo[event.buf].modified = false
+    end
+  end,
+})
+
+-- Kulala UI buffers are virtual views (json.kulala_ui, text.kulala_ui, etc.), not source files.
+-- Disable diagnostics there to avoid noisy JSON parser/LSP errors.
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('kulala_ui_diagnostics', { clear = true }),
+  pattern = '*.kulala_ui',
+  callback = function(event)
+    vim.diagnostic.enable(false, { bufnr = event.buf })
+
+    for _, win in ipairs(vim.fn.win_findbuf(event.buf)) do
+      vim.api.nvim_set_option_value('foldmethod', 'manual', { win = win })
+      vim.api.nvim_set_option_value('foldenable', false, { win = win })
+      vim.api.nvim_set_option_value('foldcolumn', '0', { win = win })
+    end
+  end,
+})

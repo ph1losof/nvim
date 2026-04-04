@@ -1,8 +1,19 @@
+local function open_kulala_scratchpad()
+  local current_buf = vim.api.nvim_get_current_buf()
+  local current_name = vim.api.nvim_buf_get_name(current_buf)
+
+  if current_name == 'kulala://scratchpad' and vim.bo[current_buf].modified then
+    vim.bo[current_buf].modified = false
+  end
+
+  require('kulala').scratchpad()
+end
+
 return {
   'mistweaverco/kulala.nvim',
   keys = {
     { '<leader>k', '', desc = '+Rest' },
-    { '<leader>ks', "<cmd>lua require('kulala').scratchpad()<cr>", desc = 'Open scratchpad' },
+    { '<leader>ks', open_kulala_scratchpad, desc = 'Open scratchpad' },
     {
       '<leader>kg',
       "<cmd>lua require('kulala').download_graphql_schema()<cr>",

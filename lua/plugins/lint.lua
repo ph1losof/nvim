@@ -23,8 +23,14 @@ return {
         group = lint_augroup,
         callback = function()
           local bufnr = vim.api.nvim_get_current_buf()
+          local filetype = vim.bo[bufnr].filetype
+          local name = vim.api.nvim_buf_get_name(bufnr)
 
           if helpers.is_lspsaga_peek_window(bufnr) then
+            return
+          end
+
+          if filetype:match('%.kulala_ui$') or name:match '^kulala://' then
             return
           end
 

@@ -1,3 +1,6 @@
+-- NOTE: <leader>ks behavior:
+-- inside any Kulala buffer => reset scratchpad (delete old + create new in current window),
+-- outside Kulala => reopen existing scratchpad if present, otherwise create one.
 local function open_kulala_scratchpad()
   local function is_kulala_buffer(buf)
     local name = vim.api.nvim_buf_get_name(buf)

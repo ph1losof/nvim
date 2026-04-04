@@ -1,9 +1,33 @@
 local function open_kulala_scratchpad()
-  local current_buf = vim.api.nvim_get_current_buf()
-  local current_name = vim.api.nvim_buf_get_name(current_buf)
+  local function is_kulala_buffer(buf)
+    local name = vim.api.nvim_buf_get_name(buf)
+    local filetype = vim.bo[buf].filetype
+    return name:match '^kulala://' or filetype:match '%.kulala_ui$'
+  end
 
-  if current_name == 'kulala://scratchpad' and vim.bo[current_buf].modified then
-    vim.bo[current_buf].modified = false
+  local scratchpads = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_get_name(buf) == 'kulala://scratchpad' then
+      table.insert(scratchpads, buf)
+    end
+  end
+
+  local current_buf = vim.api.nvim_get_current_buf()
+  if is_kulala_buffer(current_buf) then
+    for _, buf in ipairs(scratchpads) do
+      pcall(vim.api.nvim_buf_delete, buf, { force = true })
+    end
+    require('kulala').scratchpad()
+    return
+  end
+
+  if #scratchpads > 0 then
+    local target = scratchpads[#scratchpads]
+    for i = 1, #scratchpads - 1 do
+      pcall(vim.api.nvim_buf_delete, scratchpads[i], { force = true })
+    end
+    vim.api.nvim_set_current_buf(target)
+    return
   end
 
   require('kulala').scratchpad()

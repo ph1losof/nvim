@@ -120,7 +120,7 @@ local function is_kulala_transient_buffer(buf)
   return name:match '^kulala://' or filetype:match '%.kulala_ui$'
 end
 
--- Kulala buffers are ephemeral UI/scratchpad buffers.
+-- NOTE: Kulala buffers are ephemeral UI/scratchpad buffers.
 -- Keep them disposable and never "modified" so all navigation tools can switch away cleanly.
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufModifiedSet' }, {
   group = vim.api.nvim_create_augroup('kulala_transient_buffers', { clear = true }),
@@ -130,7 +130,11 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufModifiedSet' }, {
       return
     end
 
-    vim.bo[event.buf].bufhidden = 'wipe'
+    if vim.api.nvim_buf_get_name(event.buf) == 'kulala://scratchpad' then
+      vim.bo[event.buf].bufhidden = 'hide'
+    else
+      vim.bo[event.buf].bufhidden = 'wipe'
+    end
     vim.bo[event.buf].swapfile = false
 
     if vim.bo[event.buf].modified then
@@ -139,7 +143,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufModifiedSet' }, {
   end,
 })
 
--- Kulala UI buffers are virtual views (json.kulala_ui, text.kulala_ui, etc.), not source files.
+-- NOTE: Kulala UI buffers are virtual views (json.kulala_ui, etc.), not source files.
 -- Disable diagnostics there to avoid noisy JSON parser/LSP errors.
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('kulala_ui_diagnostics', { clear = true }),

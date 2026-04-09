@@ -6,7 +6,11 @@ return {
     ---@type snacks.Config
     opts = {
       picker = {},
-      image = {},
+      image = {
+        formats = {
+          'svg',
+        },
+      },
       bigfile = { enabled = true },
       scope = { enabled = true },
       dashboard = { enabled = false },

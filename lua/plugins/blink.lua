@@ -39,7 +39,7 @@ return {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono',
         kind_icons = {
-          supermaven = '',
+          Supermaven = '',
           ['99'] = '󱐋',
 
           Text = '󰉿',
@@ -92,6 +92,15 @@ return {
                 return trigger_characters
               end,
             },
+            transform_items = function(_, items)
+              local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
+              local kind_idx = #CompletionItemKind + 1
+              CompletionItemKind[kind_idx] = 'Supermaven'
+              for _, item in ipairs(items) do
+                item.kind = kind_idx
+              end
+              return items
+            end,
             name = 'supermaven',
             module = 'blink.compat.source',
             async = true,
@@ -101,6 +110,15 @@ return {
           lsp = { score_offset = 99, name = 'lsp', module = 'blink.cmp.sources.lsp' },
           ['99'] = {
             name = '99',
+            transform_items = function(_, items)
+              local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
+              local kind_idx = #CompletionItemKind + 1
+              CompletionItemKind[kind_idx] = '99'
+              for _, item in ipairs(items) do
+                item.kind = kind_idx
+              end
+              return items
+            end,
             module = 'blink.compat.source',
             score_offset = 98,
           },

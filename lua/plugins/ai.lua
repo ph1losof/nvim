@@ -72,5 +72,23 @@ return {
       }
     end,
   },
+  {
+    'supermaven-inc/supermaven-nvim',
+    event = 'InsertEnter',
+    cmd = {
+      'SupermavenUseFree',
+    },
+    config = function()
+      require('supermaven-nvim').setup {
+        disable_inline_completion = true,
+        keymaps = {
+          accept_suggestion = nil,
+        },
+        ignore_filetypes = { 'bigfile', 'snacks_input', 'snacks_notif' },
+        log_level = 'off',
+      }
+    end,
+  },
 }
+
 -- vim: ts=2 sts=2 sw=2 et

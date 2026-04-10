@@ -9,18 +9,6 @@ return {
         opts = {},
       },
       {
-        'Exafunction/codeium.nvim',
-        cmd = 'Codeium',
-        event = 'InsertEnter',
-        build = ':Codeium Auth',
-        opts = {
-          enable_cmp_source = false,
-          virtual_text = {
-            enabled = false,
-          },
-        },
-      },
-      {
         'L3MON4D3/LuaSnip',
         build = 'make install_jsregexp',
         version = 'v2.*',
@@ -51,7 +39,7 @@ return {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono',
         kind_icons = {
-          Codeium = '',
+          supermaven = '',
           ['99'] = '󱐋',
 
           Text = '󰉿',
@@ -94,32 +82,23 @@ return {
       },
       sources = {
         providers = {
-          snippets = { score_offset = 101, max_items = 3, name = 'snippets', module = 'blink.cmp.sources.snippets' },
-          lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
-          lsp = { score_offset = 99, name = 'lsp', module = 'blink.cmp.sources.lsp' },
-          codeium = {
-            name = 'Codeium',
-            module = 'codeium.blink',
-            enabled = function()
-              if vim.fn.getcmdtype() ~= '' then
-                return true
-              end
-
-              -- NOTE: disable codeium errors in these buffers
-              return not vim.tbl_contains({ 'oil', 'sagarename' }, vim.bo.filetype) and not vim.api.nvim_buf_get_name(0):match '^kulala://'
-            end,
-            score_offset = 99,
-            transform_items = function(_, items)
-              local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
-              local kind_idx = #CompletionItemKind + 1
-              CompletionItemKind[kind_idx] = 'Codeium'
-              for _, item in ipairs(items) do
-                item.kind = kind_idx
-              end
-              return items
-            end,
+          snippets = { score_offset = 102, max_items = 3, name = 'snippets', module = 'blink.cmp.sources.snippets' },
+          supermaven = {
+            score_offset = 101,
+            override = {
+              get_trigger_characters = function(self)
+                local trigger_characters = self:get_trigger_characters()
+                vim.list_extend(trigger_characters, { '\n', '\t', ' ' })
+                return trigger_characters
+              end,
+            },
+            name = 'supermaven',
+            module = 'blink.compat.source',
             async = true,
           },
+
+          lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
+          lsp = { score_offset = 99, name = 'lsp', module = 'blink.cmp.sources.lsp' },
           ['99'] = {
             name = '99',
             module = 'blink.compat.source',
@@ -127,7 +106,7 @@ return {
           },
           dadbod = { name = 'dadbod', module = 'vim_dadbod_completion.blink' },
         },
-        default = { 'codeium', '99', 'snippets', 'lazydev', 'lsp', 'path', 'buffer' },
+        default = { 'supermaven', '99', 'snippets', 'lazydev', 'lsp', 'path', 'buffer' },
         per_filetype = {
           sql = { 'snippets', 'dadbod', 'buffer' },
         },
@@ -142,6 +121,9 @@ return {
           auto_show = true,
           treesitter_highlighting = true,
           auto_show_delay_ms = 0,
+        },
+        trigger = {
+          show_on_blocked_trigger_characters = {},
         },
         accept = {
           auto_brackets = {

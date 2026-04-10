@@ -4,6 +4,11 @@ return {
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       {
+        'saghen/blink.compat',
+        version = '2.*',
+        opts = {},
+      },
+      {
         'Exafunction/codeium.nvim',
         cmd = 'Codeium',
         event = 'InsertEnter',
@@ -47,6 +52,7 @@ return {
         nerd_font_variant = 'mono',
         kind_icons = {
           Codeium = '',
+          ['99'] = '󱐋',
 
           Text = '󰉿',
           Method = '󰊕',
@@ -102,7 +108,7 @@ return {
               -- NOTE: disable codeium errors in these buffers
               return not vim.tbl_contains({ 'oil', 'sagarename' }, vim.bo.filetype) and not vim.api.nvim_buf_get_name(0):match '^kulala://'
             end,
-            score_offset = 98,
+            score_offset = 99,
             transform_items = function(_, items)
               local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
               local kind_idx = #CompletionItemKind + 1
@@ -114,9 +120,14 @@ return {
             end,
             async = true,
           },
+          ['99'] = {
+            name = '99',
+            module = 'blink.compat.source',
+            score_offset = 98,
+          },
           dadbod = { name = 'dadbod', module = 'vim_dadbod_completion.blink' },
         },
-        default = { 'codeium', 'snippets', 'lazydev', 'lsp', 'path', 'buffer' },
+        default = { 'codeium', '99', 'snippets', 'lazydev', 'lsp', 'path', 'buffer' },
         per_filetype = {
           sql = { 'snippets', 'dadbod', 'buffer' },
         },

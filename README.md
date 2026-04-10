@@ -23,13 +23,13 @@ I actively keep it up to date with modern approaches, plugins, and ecosystem cha
 
 ### Highlights
 
-- **67 plugins** organized across 38 separate plugin files
+- **70 plugins** organized across 40 separate plugin files
 - **20 language servers** configured with smart root detection and conditional attachment
-- **AI-augmented development** via Codeium integration (I use claude-code via tmux)
+- **AI-augmented development** via `99` and Supermaven
 - **Custom tree-sitter parser** (`edf`) for `.env` file syntax highlighting
 - **Format on save** with conform.nvim (prettier, biome, stylua, ruff, rustfmt, and more)
 - **10+ linters** running via nvim-lint
-- **Modern completion** via blink.cmp with AI and LSP sources
+- **Modern completion** via blink.cmp with `supermaven` + `99` AI sources and LSP
 - **Sensitive data masking** with shelter.nvim
 - **Environment variable management** with ecolog2.nvim
 - **REST client** via kulala.nvim
@@ -50,6 +50,7 @@ TypeScript/JavaScript, React/Vue/Astro, Python, Rust, Lua, SQL, Bash, HTML/CSS/T
 - **C compiler** (`gcc` or `clang`) — needed by tree-sitter to compile parsers
 - **[ripgrep](https://github.com/BurntSushi/ripgrep#installation)** — used by snacks.nvim picker for live grep
 - **Node.js** & **npm** — required by many LSP servers and tools
+- **`opencode` CLI** — required by the current `99` setup (`OpenCodeProvider`)
 - **[Nerd Font](https://www.nerdfonts.com/)** — provides icons used throughout the UI (`vim.g.have_nerd_font` is set to `true`)
 - **Clipboard tool** — `pbcopy`/`pbpaste` (macOS), `xclip`/`xsel` (Linux), or `win32yank` (Windows)
 
@@ -121,6 +122,16 @@ Leader key is `Space`. Here are the most important mappings — run `:map` or ch
 | `<leader>ca` | Code action          |
 | `<leader>ol` | Toggle outline       |
 
+### AI
+
+| Key          | Description    |
+| ------------ | -------------- |
+| `<leader>aa` | `99` vibe      |
+| `<leader>av` | `99` visual    |
+| `<leader>as` | `99` search    |
+| `<leader>ax` | `99` stop      |
+| `<leader>al` | `99` view logs |
+
 ### Git
 
 | Key          | Description                  |
@@ -169,6 +180,33 @@ When I initially started using Neovim, my starting point was [NvChad](https://nv
 _The initial transition from NvChad was done using [nvim-lua/kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) as a starting point. Over time I dropped most of it and rewrote everything from scratch, keeping only a few good parts from them. Huge thanks to kickstart for getting me started in non-distro direction._
 
 _A lot of good defaults, extras, and plugin choices in this config were inspired by [LazyVim](https://www.lazyvim.org/). Whenever I add a new plugin, I usually look up its source code in the [LazyVim repo](https://github.com/LazyVim/LazyVim) first — a great reference for well-thought-out Neovim defaults._
+
+## Q&A
+
+### How do I use AI tools in neovim?
+
+on AI side the current setup incorporates 99 (via OpenCode provider) and SuperMaven. Right now my philosophy is as follows:
+I prefer use cli AI tools like (claude-code and opencode) in combination with tmux to have agentic experience.
+
+Hence, I leave my workflows in neovim to be centered about more thoughtful and less agentic experience.
+
+However, I still want AI capabilities and the ability to work quickly. And that's what 99 by ThePrimeagen got totally right.
+It brings that traditional feeling of copilot to the neovim, and allows you to maintain both speed and quality in a mindful way.
+
+### Windsurf.nvim vs SuperMaven.nvim
+
+The opinion here is that SuperMaven.nvim is much better then Windsurf.nvim in their current state. Both are deprecated in their own ways.
+
+While supermaven stated that they are going to be sunsetted, they still allow completions that are fast and intelligent.
+
+windsurf.nvim (formerly Codeium.nvim) is a different story in a sense that it is not officially deprecated but server binaries have been deprecating
+plugin system in secret. Yes - I have verified it myself when was trying to force it to use newer ai models for completions but the plugin api itself is deprecated.
+
+Today when comparing them both in their current state, two things standout:
+
+First of all, supermaven.nvim is much much faster and seems to be more intelligent.
+
+Second of all, supermaven.nvim doesn't have so much errors like windsurf.nvim, especially around non-modifiable buffers.
 
 ## License
 

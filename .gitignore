@@ -1,5 +1,6 @@
 tags
 test.sh
+99_tmp/
 .luarc.json
 nvim
 .DS_STORE

@@ -71,9 +71,6 @@ return {
         ['typescript-tools.nvim'] = {
           vim.fn.expand '~/.config/nvim/patches/typescript-tools.patch',
         },
-        ['tirenvi.nvim'] = {
-          vim.fn.expand '~/.config/nvim/patches/tirenvi.patch',
-        },
       },
     }
   end,

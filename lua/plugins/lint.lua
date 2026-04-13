@@ -5,6 +5,20 @@ return {
     config = function()
       local lint = require 'lint'
       local helpers = require 'helpers'
+      local vale_config = vim.fn.stdpath 'config' .. '/.vale.ini'
+
+      if lint.linters.vale then
+        local vale_args = lint.linters.vale.args or {}
+        if not vim.tbl_contains(vale_args, '--config') then
+          lint.linters.vale.args = vim.list_extend({
+            '--config',
+            function()
+              return vim.fs.find('.vale.ini', { upward = true })[1] or vale_config
+            end,
+          }, vale_args)
+        end
+      end
+
       lint.linters_by_ft = {
         lua = { 'luacheck' },
         python = { 'pylint' },

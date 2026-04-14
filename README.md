@@ -58,7 +58,6 @@ TypeScript/JavaScript, React/Vue/Astro, Python, Rust, Lua, SQL, Bash, HTML/CSS/T
 
 - **[mise](https://mise.jdx.dev/)** — runtime version manager (config prepends mise shims to `PATH`)
 - **[lazygit](https://github.com/jesseduffield/lazygit)** — terminal UI for git, integrated via snacks.nvim (`<leader>lg`)
-- **[tir-csv](https://www.piwheels.org/project/tir-csv/)** — csv converter used by `cellmode.nvim` for table view of CSV/TSV files.
 - **[fd](https://github.com/sharkdp/fd)** — faster file finding for the picker
 
 **Optional (language-specific):**

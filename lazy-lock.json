@@ -5,7 +5,7 @@
   "LuaSnip": { "branch": "master", "commit": "642b0c595e11608b4c18219e93b88d7637af27bc" },
   "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
   "blink.compat": { "branch": "main", "commit": "2ed6d9a28b07fa6f3bface818470605f8896408c" },
-  "cellmode.nvim": { "branch": "main", "commit": "86a87fac1d3194ede3c4690039cb2dc8758f54ee" },
+  "cellmode.nvim": { "branch": "main", "commit": "6fb3f153357e39396bd25602be74c6fd9ca5883a" },
   "conform.nvim": { "branch": "master", "commit": "086a40dc7ed8242c03be9f47fbcee68699cc2395" },
   "ecolog2.nvim": { "branch": "main", "commit": "78286d3a08711eaacc5b9afafc772f6e5c988bb7" },
   "eyeliner.nvim": { "branch": "main", "commit": "8f197eb30cecdf4c2cc9988a5eecc6bc34c0c7d6" },

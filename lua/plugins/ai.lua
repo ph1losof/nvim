@@ -52,7 +52,7 @@ return {
 
       _99.setup {
         provider = _99.Providers.OpenCodeProvider,
-        model = 'openai/gpt-5.3-codex',
+        model = 'openai/gpt-5.3-codex-spark',
         provider_extra_args = {
           '--dangerously-skip-permissions',
         },

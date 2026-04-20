@@ -110,6 +110,9 @@ return {
           lsp = { score_offset = 99, name = 'lsp', module = 'blink.cmp.sources.lsp' },
           ['99'] = {
             name = '99',
+            enabled = function()
+              return vim.bo.filetype == '99prompt'
+            end,
             transform_items = function(_, items)
               local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
               local kind_idx = #CompletionItemKind + 1

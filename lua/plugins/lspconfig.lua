@@ -93,6 +93,21 @@ return {
         },
         bashls = {},
         tailwindcss = {
+          filetypes = {
+            'astro',
+            'css',
+            'html',
+            'javascript',
+            'javascriptreact',
+            'less',
+            'markdown',
+            'sass',
+            'scss',
+            'svelte',
+            'typescript',
+            'typescriptreact',
+            'vue',
+          },
           root_dir = function(bufnr, on_dir)
             local root = vim.fs.root(bufnr, {
               'tailwind.config.cjs',
@@ -107,6 +122,7 @@ return {
           end,
         },
         marksman = {
+          filetypes = { 'markdown' },
           -- NOTE: This solves the problem of Marksman exiting when a new hover doc buffer (from Lspsaga) is created
           root_dir = function(bufnr, on_dir)
             if helpers.is_lspsaga_peek_window(bufnr) then
@@ -146,7 +162,9 @@ return {
         },
         prismals = {},
         jsonls = {},
-        yamlls = {},
+        yamlls = {
+          filetypes = { 'yaml' },
+        },
         volar = {},
         dockerls = {},
         dotls = {},

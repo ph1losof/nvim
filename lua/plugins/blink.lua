@@ -107,7 +107,27 @@ return {
           },
 
           lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
-          lsp = { score_offset = 99, name = 'lsp', module = 'blink.cmp.sources.lsp' },
+          lsp = {
+            score_offset = 99,
+            name = 'lsp',
+            module = 'blink.cmp.sources.lsp',
+            override = {
+              get_trigger_characters = function(self)
+                local trigger_characters = self:get_trigger_characters()
+                vim.list_extend(trigger_characters, { '\n', '\t', ' ' })
+                return trigger_characters
+              end,
+              get_completions = function(self, context, callback)
+                if context.trigger.kind == 'trigger_character' and context.trigger.character == ' ' then
+                  local invoked_context = vim.deepcopy(context)
+                  invoked_context.trigger.kind = 'keyword'
+                  return self:get_completions(invoked_context, callback)
+                end
+
+                return self:get_completions(context, callback)
+              end,
+            },
+          },
           ['99'] = {
             name = '99',
             enabled = function()

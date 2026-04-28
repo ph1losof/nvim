@@ -114,6 +114,9 @@ return {
               'tailwind.config.ts',
               'tailwind.config.mjs',
               'tailwind.config.js',
+              'postcss.config.cjs',
+              'postcss.config.mjs',
+              'postcss.config.ts',
               'postcss.config.js',
             })
             if root then

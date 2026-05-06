@@ -39,7 +39,6 @@ return {
 
         -- Rust
         'rust-analyzer',
-        'rustfmt',
         'taplo',
 
         -- File Formats
@@ -79,6 +78,7 @@ return {
         'prettier',
         'prettierd',
         'vue-language-server',
+        'eslint-lsp',
         'eslint_d',
         'codespell',
         'dockerfile-language-server',

@@ -2,7 +2,11 @@ return {
   {
     'saghen/blink.cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
+    build = function()
+      require('blink.cmp').build():wait(60000)
+    end,
     dependencies = {
+      'saghen/blink.lib',
       {
         'saghen/blink.compat',
         version = '2.*',
@@ -28,7 +32,7 @@ return {
         end,
       },
     },
-    version = '1.*', -- use a release tag to download pre-built binaries
+    version = '2.*',
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
@@ -164,7 +168,8 @@ return {
           auto_show_delay_ms = 0,
         },
         trigger = {
-          show_on_blocked_trigger_characters = {},
+          show_on_trigger_character = true,
+          show_on_blocked_trigger_characters = { ' ', '\n', '\t' },
         },
         accept = {
           auto_brackets = {

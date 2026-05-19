@@ -98,7 +98,7 @@ vim.api.nvim_create_autocmd('User', {
 
 return {
   {
-    'stevearc/oil.nvim',
+    'barrettruth/canola.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
       { '<C-n>', '<cmd>Oil<cr>', desc = 'Open parent directory' },

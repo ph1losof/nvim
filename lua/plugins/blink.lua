@@ -3,7 +3,7 @@ return {
     'saghen/blink.cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
     build = function()
-      require('blink.cmp').build():wait(60000)
+      require('blink.cmp').build():pwait(60000)
     end,
     dependencies = {
       'saghen/blink.lib',
@@ -15,7 +15,6 @@ return {
       {
         'L3MON4D3/LuaSnip',
         build = 'make install_jsregexp',
-        version = 'v2.*',
         dependencies = 'rafamadriz/friendly-snippets',
         opts = { history = true, updateevents = 'TextChanged,TextChangedI' },
         config = function(_, opts)
@@ -32,7 +31,7 @@ return {
         end,
       },
     },
-    version = '2.*',
+    branch = 'main',
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
